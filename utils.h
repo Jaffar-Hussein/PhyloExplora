@@ -33,10 +33,14 @@ typedef enum Base_Azotee {
 } Base_Azotee;
 
 int score_alignement(char* alignement1, char* alignement2);
+int get_number_entries(char* address);
 void print_quality_alignement(char* ali1, char* ali2, int score);
 void set_empty_string(char* str);
 void set_sequence(Sequence* sequence, char* ID, char* seq);
+void parse_file(char* address, Sequence tab_sequences[]);
 void needleman_wunsch(Sequence seq1, Sequence seq2, char* alignement1, char* alignement2);
+void initialise_matrice(int entries, float matrice_distance[][entries]);
+void fill_distance_matrix(int entries, float matrice_distance[][entries], Sequence sequences[]);
 
 //MATRICE DE DISTANCE
 void show_distance_matrix(char* file_aligne);
