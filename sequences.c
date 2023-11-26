@@ -145,6 +145,7 @@ char* readFile(char* fileName) {
         code[n++] = (char)c;
     }
     code[n] = '\0';
+    fclose(file);
     return code;
 }
 
@@ -182,7 +183,7 @@ int extract_next_sequence(char* code, int start, Sequence* sequence) {
         }
     }
 
-    printf("Fin de boucle\n");
+    //printf("Fin de boucle\n");
 
     set_sequence(sequence,id,seq);
     if (code[start] == '\0'){
@@ -205,7 +206,7 @@ void parse_file(char* address, Sequence tab_sequences[]) {
         endf = extract_next_sequence(data,endf,&tab_sequences[i++]);
         /*printf("%d\n",endf);*/
     }
-
+    free(data);
 }
 
 /*
