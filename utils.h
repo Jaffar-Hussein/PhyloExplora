@@ -12,14 +12,18 @@ Sujet propose par George Marchment
 #include <stdlib.h>
 #include <math.h>
 
-
-//Sequence
+// Sequence
 #define ID_MAX_LENGTH 50
 #define seq_MAX_LENGTH 400
 
-typedef struct Sequence {
-    char ID[ID_MAX_LENGTH];
-    char seq[seq_MAX_LENGTH];
+/**
+ * @struct Sequence
+ * @brief Represents a sequence with an ID and a sequence string.
+ */
+typedef struct Sequence
+{
+    char ID[ID_MAX_LENGTH];   /**< The ID of the sequence. */
+    char seq[seq_MAX_LENGTH]; /**< The sequence string. */
 } Sequence;
 
 void show_sequences_file(char* file);
@@ -29,11 +33,16 @@ void appendString(char* str, char c);
 void affiche_sequence(Sequence* sequence);
 
 
-//Alignement
+// Alignement
 #define NB_BASE 5
 
-typedef enum Base_Azotee {
-    A = 0, C = 1, G = 2, T = 3, E = 4
+typedef enum Base_Azotee
+{
+    A = 0,
+    C = 1,
+    G = 2,
+    T = 3,
+    E = 4
 } Base_Azotee;
 
 int score_alignement(char* alignement1, char* alignement2);
@@ -55,22 +64,25 @@ typedef struct Noeud {
     struct Noeud* suivant_left;
     struct Noeud* suivant_right;
     int nb_noeud;
-}Noeud;
+} Noeud;
 
-typedef struct Element {
-    struct Element* next;
-    Noeud* data;
-}Element;
+typedef struct Element
+{
+    struct Element *next;
+    Noeud *data;
+} Element;
 
-typedef struct List_Noeuds {
-    Element* head;
+typedef struct List_Noeuds
+{
+    Element *head;
     int nb_elements;
-}List_Noeuds;
+} List_Noeuds;
 
+typedef struct Arbre
+{
+    Noeud *tete;
+} Arbre;
 
-typedef struct Arbre {
-    Noeud* tete;
-}Arbre;
+void show_tree(char *file_aligne, char Algorithme);
 
-void show_tree(char* file_aligne, char Algorithme);
 

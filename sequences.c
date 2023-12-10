@@ -39,11 +39,13 @@ void set_empty_string(char* str) {
 Fonctions de manipulation de sequences
 --------------------------------------*/
 
-/*
-Input : une sequence et une chaîne de caracteres
-Output : None
-Main : Initialise la chaîne de caracteres en tant qu'ID pour la sequence
-*/
+
+/**
+ * Sets the ID of a Sequence object.
+ *
+ * @param sequence The Sequence object to set the ID for.
+ * @param ID The ID to set.
+ */
 void set_id(Sequence* sequence, char* ID) {
     int length = strlen(ID);
     for (int i = 0; i < length; i++) {
@@ -90,8 +92,7 @@ Output : None
 Main : Effectue l'affichage de la sequence
 */
 void affiche_sequence(Sequence* sequence) {
-    //TODO
-    printf("   * ID : %s\n   * Sequence :\n%s\n",sequence->ID,sequence->seq);
+    printf("\t*ID : %s\n\t*Sequence :\n", sequence->ID,sequence->seq);
 }
 
 
@@ -161,32 +162,7 @@ Main : Fonction qui prend le code ainsi qu'une position start, elle va chercher 
 */
 int extract_next_sequence(char* code, int start, Sequence* sequence) {
     //TODO
-    int id_flag = 1;
-    char id[ID_MAX_LENGTH];
-    set_empty_string(id);
-    char seq[seq_MAX_LENGTH];
-    set_empty_string(seq);
-    while (code[++start] != '>' && code[start] != '\0'){
-        if (id_flag == 1){
-            if (code[start] == '\n'){
-                id_flag = 0;
-            } else {
-                appendString(id,code[start]);
-            }
-        } else {
-            if (code[start] != '\n')
-            {
-                appendString(seq,code[start]);
-            }
-        }
-    }
 
-    set_sequence(sequence,id,seq);
-    if (code[start] == '\0'){
-        return -1;
-    }
-    else {
-        return (start);}
 }
 
 /*
