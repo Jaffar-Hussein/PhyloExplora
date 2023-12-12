@@ -227,8 +227,7 @@ void parse_file(char *address, Sequence tab_sequences[])
     while (start != -1)
     {
         start = extract_next_sequence(code, start, &sequence);
-        tab_sequences[counter] = sequence;
-        counter++;
+        tab_sequences[counter++] = sequence;
     }
 }
 

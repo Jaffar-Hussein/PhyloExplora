@@ -11,7 +11,7 @@ Sujet propose par George Marchment
 
 int main() {
     int SEQUENCES = 1;
-    int ALIGNEMENT = 0;
+    int ALIGNEMENT = 1;
     int MATRICE_DISTANCE = 0;
     int UPGMA = 0;
     int NJ = 0;
