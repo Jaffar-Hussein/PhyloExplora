@@ -28,9 +28,6 @@ typedef struct Sequence
 
 void show_sequences_file(char *file);
 
-
-
-
 // Alignement
 #define NB_BASE 5
 
@@ -50,9 +47,11 @@ void set_sequence(Sequence *sequence, char *ID, char *seq);
 void needleman_wunsch(Sequence seq1, Sequence seq2, char *alignement1, char *alignement2);
 
 // MATRICE DE DISTANCE
+
 void show_distance_matrix(char *file_aligne);
 int get_number_entries(char *address);
 void parse_file(char *address, Sequence tab_sequences[]);
+void appendString(char *str, char c);
 // TREE
 void initialise_matrice(int entries, float matrice_distance[][entries]);
 void fill_distance_matrix(int entries, float matrice_distance[][entries], Sequence sequences[]);
@@ -82,5 +81,3 @@ typedef struct Arbre
 } Arbre;
 
 void show_tree(char *file_aligne, char Algorithme);
-
-
