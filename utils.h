@@ -84,5 +84,3 @@ typedef struct Arbre
 } Arbre;
 
 void show_tree(char *file_aligne, char Algorithme);
-
-
