@@ -91,6 +91,8 @@ Main : Effectue l'affichage de la sequence
 */
 void affiche_sequence(Sequence* sequence) {
     //TODO
+ printf("ID: %s\n", sequence->ID);
+ printf("Sequence: %s\n", sequence->seq);
 }
 
 
@@ -159,6 +161,39 @@ Main : Fonction qui prend le code ainsi qu'une position start, elle va chercher 
 */
 int extract_next_sequence(char* code, int start, Sequence* sequence) {
     //TODO
+ int i = start;
+    int seqIndex = 0;
+
+    // Sauter les caractères jusqu'à ce que '>' soit trouvé
+    while (code[i] != '>' && code[i] != '\0') {
+        i++;
+    }
+
+    // vérifier si '>' a été trouvé
+    if (code[i] == '>') {
+        i++; // on incrémente '>'
+        set_empty_string(sequence->ID);
+
+        //Extraire l'ID jusqu'à ce qu'une nouvelle ligne soit trouvée
+        while (code[i] != '\n') {
+            appendString(sequence->ID, code[i]);
+            i++;
+        }
+        i++; // Move past '\n'
+
+        // Extract sequence until the next '>' or end of string
+        set_empty_string(sequence->seq);
+        while (code[i] != '>' && code[i] != '\0') {
+            appendString(sequence->seq, code[i]);
+            i++;
+        }
+
+        // Return the last position read
+        return i;
+    } else {
+        // Return -1 for the last sequence
+        return -1;
+    }
 }
 
 /*
@@ -168,6 +203,22 @@ Main : Fonction qui lit un fichier, remplit la liste avec les sequences trouvees
 */
 void parse_file(char* address, Sequence tab_sequences[]) {
     //TODO
+char* code = readFile(address);
+
+    if (code == NULL) {
+        printf("Error reading file\n");
+        return;
+    }
+
+    int num_sequences = get_number_entries(address);
+    int position = 0;
+
+    for (int i = 0; i < num_sequences; i++) {
+        position = extract_next_sequence(code, position, &tab_sequences[i]);
+        if (position == -1) {
+            break; // Reached the end of the file
+        }
+    }
 }
 
 /*
