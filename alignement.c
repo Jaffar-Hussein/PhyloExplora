@@ -27,7 +27,19 @@ Main : Fonction qui prend un caractere et retourne l'index correspondant (voir l
 */
 int get_val_base(char a) {
     //TODO
-}
+  switch (a) {
+        case 'A':
+            return A;
+        case 'C':
+            return C;
+        case 'G':
+            return G;
+        case 'T':
+            return T;
+        default:
+            return -1;  // pour les caractères non valides
+    }
+}         
 
 /*
 Input : Deux caracteres 
@@ -37,6 +49,9 @@ Main : Fonction qui prend en entier 2 caracteres et qui retourne
 */
 int similarity_score(char ch1, char ch2) {
     //TODO
+   int index1 = get_val_base(ch1);
+    int index2 = get_val_base(ch2);
+    return similarity_matrix[index1][index2];        
 }
 
 /*
@@ -47,6 +62,13 @@ Main : Fonction qui prend en entier 2 chaînes de caracteres et qui retourne
 */
 int score_alignement(char* alignement1, char* alignement2) {
     //TODO
+   int score = 0;
+           
+    for (int i = 0; alignement1[i] != '\0'; i++) {
+        score += similarity_score(alignement1[i], alignement2[i]);
+    }
+
+    return score;        
 }
 
 /*
@@ -57,6 +79,9 @@ Main : Procedure qui prend en entier 2 chaînes de caracteres et un score
 */
 void print_quality_alignement(char* ali1, char* ali2, int score) {
     //TODO
+    printf("Alignment 1: %s\n", ali1);
+    printf("Alignment 2: %s\n", ali2);
+    printf("Alignment Score: %d\n", score);        
 }
 
 /*----------------------------
@@ -70,6 +95,7 @@ Main : Procedure qui Initialise la matrice M
 */
 void initialise_M(int n, int m, int M[][m]) {
     //TODO
+
 }
 
 /*
@@ -103,6 +129,7 @@ Main : Procedure qui inverse une chaîne de caracteres
 */
 void reverse_string(char* str) {
     //TODO
+           
 }
 
 /*
