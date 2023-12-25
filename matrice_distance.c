@@ -32,7 +32,7 @@ float distance(Sequence seq1, Sequence seq2)
         }
     }
     // printf (float)substitutions / total;
-    printf("substitutions: %f\n", substitutions/total);
+    // printf("substitutions: %f\n", substitutions/total);
     return substitutions / total;
 
 }
@@ -110,12 +110,12 @@ void fill_distance_matrix(int entries, float matrice_distance[][entries], Sequen
     }
     // print whole matrix
 
-    for(int i = 0; i < entries; i++){
-        for(int j = 0; j < entries; j++){
-            printf("%f ", matrice_distance[i][j]);
-        }
-        printf("\n");
-    }
+    // for(int i = 0; i < entries; i++){
+    //     for(int j = 0; j < entries; j++){
+    //         printf("%f ", matrice_distance[i][j]);
+    //     }
+    //     printf("\n");
+    // }
 }
 
 /*
