@@ -11,13 +11,17 @@ Sujet propose par George Marchment
 ----------------------------------
 */
 
-int max(int a, int b) {
-    if (a > b) return a;
+int max(int a, int b)
+{
+    if (a > b)
+        return a;
     return b;
 }
 
-int min(int a, int b) {
-    if (a < b) return a;
+int min(int a, int b)
+{
+    if (a < b)
+        return a;
     return b;
 }
 
@@ -31,9 +35,12 @@ Input : un entier, 2 matrices de float
 Output : None
 Main : Procedure qui copie l'ancienne matrice dans la nouvelle
 */
-void set_copy(int entries, float new_tab[][entries], float old_tab[][entries]) {
-    for (int i = 0; i < entries; i++) {
-        for (int j = 0; j < entries; j++) {
+void set_copy(int entries, float new_tab[][entries], float old_tab[][entries])
+{
+    for (int i = 0; i < entries; i++)
+    {
+        for (int j = 0; j < entries; j++)
+        {
             new_tab[i][j] = old_tab[i][j];
         }
     }
@@ -70,7 +77,7 @@ Input : - 2 entiers
         - un pointeur sur un float
         - 2 pointeurs sur des entiers
 Output : None
-Main : Procedure qui trouve la valeur min dans la matrice Inferieur et stocke cette valeur 
+Main : Procedure qui trouve la valeur min dans la matrice Inferieur et stocke cette valeur
        dans le pointeur et ces index dans les 2 autres pointeurs
 */
 void find_min_index_distance_matrix(int entries, int nb_noeud, float matrice_distance[][entries], float* min, int* i_min, int* j_min) {
@@ -106,8 +113,10 @@ Input : Un Noeud
 Output : Entier
 Main : Fonction qui retourne 1 si un noeud est une feuille, 0 sinon
 */
-int est_feuille(Noeud* e) {
-    if (e->suivant_left == NULL && e->suivant_right == NULL) {
+int est_feuille(Noeud *e)
+{
+    if (e->suivant_left == NULL && e->suivant_right == NULL)
+    {
         return 1;
     }
     return 0;
@@ -118,8 +127,9 @@ Input : None
 Output : pointeur sur un noeud
 Main : qui cree un noeud vide
 */
-Noeud* new_noeud() {
-    Noeud* n = (Noeud*)malloc(sizeof(Noeud));
+Noeud *new_noeud()
+{
+    Noeud *n = (Noeud *)malloc(sizeof(Noeud));
     n->suivant_left = NULL;
     n->suivant_right = NULL;
     n->valeur = NULL;
@@ -132,18 +142,21 @@ Input : pointeur sur un noeud
 Output : pointeur sur un noeud
 Main : qui cree une copie du noeud, en copiant chaque element un par un
 */
-Noeud* create_copy(Noeud* e) {
-    Noeud* n = new_noeud();
+Noeud *create_copy(Noeud *e)
+{
+    Noeud *n = new_noeud();
     n->valeur = e->valeur;
     n->nb_noeud = e->nb_noeud;
 
-    if (e->suivant_left != NULL) {
-        Noeud* left = create_copy(e->suivant_left);
+    if (e->suivant_left != NULL)
+    {
+        Noeud *left = create_copy(e->suivant_left);
         n->suivant_left = left;
     }
 
-    if (e->suivant_right != NULL) {
-        Noeud* right = create_copy(e->suivant_right);
+    if (e->suivant_right != NULL)
+    {
+        Noeud *right = create_copy(e->suivant_right);
         n->suivant_right = right;
     }
     return n;
@@ -153,11 +166,10 @@ Noeud* create_copy(Noeud* e) {
 Fonctions de manipulation d'affichage
 -------------------------------------*/
 
-
 /*
 Input : pointeur sur un arbre
 Output : None
-Main : procedure qui affiche un arbre 
+Main : procedure qui affiche un arbre
 */
 void new_affichage(Noeud* a,int* step, char mark){
     //TODO
@@ -242,11 +254,15 @@ Input : pointeur sur un noeud
 Output : None
 Main : procedure qui affiche le noeud (d'une maniere plate)
 */
-void afficher_elem_plat(Noeud* e) {
-    if (e == NULL) return;
+void afficher_elem_plat(Noeud *e)
+{
+    if (e == NULL)
+        return;
 
-    if (est_feuille(e)) printf("%s", e->valeur);
-    else {
+    if (est_feuille(e))
+        printf("%s", e->valeur);
+    else
+    {
         printf("(");
         afficher_elem_plat(e->suivant_left);
         printf(", ");
@@ -260,8 +276,9 @@ Input : pointeur sur un arbre
 Output : None
 Main : procedure qui affiche un arbre (d'une maniere plate)
 */
-void afficher_arbre_plat(Arbre* a) {
-    Noeud* e = a->tete;
+void afficher_arbre_plat(Arbre *a)
+{
+    Noeud *e = a->tete;
     printf("\n");
     afficher_elem_plat(e);
     printf("\n");
@@ -276,7 +293,8 @@ Input : pointeur d'une Liste de Noeud
 Output : entier
 Main : Fonction qui retourne le nombre d'elements dans la liste
 */
-int get_nb_noeuds(List_Noeuds* list) {
+int get_nb_noeuds(List_Noeuds *list)
+{
     return list->nb_elements;
 }
 
@@ -303,20 +321,22 @@ Input : pointeur d'une Liste de Noeud et un entier
 Output : Pointeur sur un noeud
 Main : Fonction qui retourne le noeud stocke dans l'element qui se trouve à l'index i
 */
-Noeud* get_noeud_from_list(List_Noeuds* list, int i) {
+Noeud *get_noeud_from_list(List_Noeuds *list, int i)
+{
     return get_element(list, i)->data;
 }
 
 /*
 Input : pointeur d'une Liste de Noeud et un pointeur sur un noeud
 Output : None
-Main : Procedure qui cree un nouvel element, stocke le noeud dans l'element et qui 
-       ajoute l'element à la fin de la liste, en faisant attention de bien modifier la 
+Main : Procedure qui cree un nouvel element, stocke le noeud dans l'element et qui
+       ajoute l'element à la fin de la liste, en faisant attention de bien modifier la
        taille de la liste.
 */
-void add_Noeud(List_Noeuds* list, Noeud* n) {
-    Element* temp = get_element(list, get_nb_noeuds(list) - 1);
-    Element* to_add = (Element*)malloc(sizeof(Element));
+void add_Noeud(List_Noeuds *list, Noeud *n)
+{
+    Element *temp = get_element(list, get_nb_noeuds(list) - 1);
+    Element *to_add = (Element *)malloc(sizeof(Element));
     to_add->next = NULL;
     to_add->data = n;
     temp->next = to_add;
@@ -365,7 +385,7 @@ Fonctions pour UPGMA
 /*
 Input : - taille de la matrice (entier)
         - pointeur d'une Liste de Noeud
-        - matrice de float 
+        - matrice de float
         - 3 entiers
 Output : float
 Main : Fonction qui calcule la valeur d'une nouvelle cellule dans la matrice à partir de la formule d_ij,k
@@ -390,9 +410,9 @@ float calcule_new_cell(int entries, List_Noeuds* list, float matrice_distance[][
 /*
 Input : - taille de la matrice (entier)
         - pointeur d'une Liste de Noeud
-        - matrice de float 
+        - matrice de float
 Output : pointeur d'une Liste de Noeud
-Main : Fonction qui effectue une etape de l'algorithme de UPGMA et qui retourne un pointeur 
+Main : Fonction qui effectue une etape de l'algorithme de UPGMA et qui retourne un pointeur
       sur une nouvelle liste de noeuds
 */
 List_Noeuds* fuse_matrice_upgma(int entries, List_Noeuds* list, float matrice_distance[][entries]) {
@@ -444,11 +464,12 @@ List_Noeuds* fuse_matrice_upgma(int entries, List_Noeuds* list, float matrice_di
 /*
 Input : - taille de la matrice (entier)
         - pointeur d'une Liste de Noeuds
-        - matrice de float 
+        - matrice de float
 Output : Un arbre
 Main : Fonction qui effectue l'algorithme de UPGMA et qui retourne un arbre
 */
-Arbre UPGMA(int entries, List_Noeuds* list, float matrice_distance[][entries]) {
+Arbre UPGMA(int entries, List_Noeuds *list, float matrice_distance[][entries])
+{
 
     int nb_noeuds = get_nb_noeuds(list);
 
@@ -470,10 +491,10 @@ Fonctions pour Neighbor Joining
 /*
 Input : - taille de la matrice (entier)
         - Nombre de noeuds
-        - Liste de float 
-        - matrice de float 
+        - Liste de float
+        - matrice de float
 Output : None
-Main : Procedure qui calcule les S de la matrice de distance donnee en parametre en suivant les regles definies dans le lien 
+Main : Procedure qui calcule les S de la matrice de distance donnee en parametre en suivant les regles definies dans le lien
 */
 void calcul_S(int entries, int nb_noeuds, float S[nb_noeuds], float matrice[][entries]) {
     //TODO
@@ -505,8 +526,8 @@ void calcul_S(int entries, int nb_noeuds, float S[nb_noeuds], float matrice[][en
 /*
 Input : - taille de la matrice (entier)
         - Nombre de noeuds
-        - Liste de float 
-        - matrice de float 
+        - Liste de float
+        - matrice de float
         - pointeur sur un float
         - 2 pointeurs sur des entiers
 Output : None
@@ -538,9 +559,9 @@ void calcule_pair_Mij(int entries, int nb_noeuds, float S[nb_noeuds], float matr
 /*
 Input : - taille de la matrice (entier)
         - pointeur d'une Liste de Noeud
-        - matrice de float 
+        - matrice de float
 Output : pointeur d'une Liste de Noeud
-Main : Fonction qui effectue une etape de l'algorithme de Neighbor Joining et qui retourne un pointeur 
+Main : Fonction qui effectue une etape de l'algorithme de Neighbor Joining et qui retourne un pointeur
       sur une nouvelle liste de noeuds
 */
 List_Noeuds* fuse_matrice_NJ(int entries, List_Noeuds* list, float matrice_distance[][entries]) {
@@ -593,11 +614,12 @@ List_Noeuds* fuse_matrice_NJ(int entries, List_Noeuds* list, float matrice_dista
 /*
 Input : - taille de la matrice (entier)
         - pointeur d'une Liste de Noeud
-        - matrice de float 
+        - matrice de float
 Output : Un arbre
 Main : Fonction qui effectue l'algorithme de Neighbor Joining et qui retourne un arbre
 */
-Arbre Neighbor_Joining(int entries, List_Noeuds* list, float matrice_distance[][entries]) {
+Arbre Neighbor_Joining(int entries, List_Noeuds *list, float matrice_distance[][entries])
+{
 
     int nb_noeuds = get_nb_noeuds(list);
     while (nb_noeuds > 1) {
@@ -617,10 +639,11 @@ Input : - une chaîne de caracteres correspondant à une adresse
         - l'algorithme de construction voulu, un caractere (U ou N)
 Output : None
 Main : Une procedure qui prend une adresse d'un fichier, le parse, extrait les sequences
-       alignees et ensuite construit et affiche l'arbre phylogenetique correspondant 
+       alignees et ensuite construit et affiche l'arbre phylogenetique correspondant
        Soit avec l'algo UPGMA ou Neighbor joining.
 */
-void show_tree(char* file_aligne, char Algorithme) {
+void show_tree(char *file_aligne, char Algorithme)
+{
     int nb_entries = get_number_entries(file_aligne);
     Sequence tab_sequences_aligne[nb_entries];
     parse_file(file_aligne, tab_sequences_aligne);
@@ -632,27 +655,30 @@ void show_tree(char* file_aligne, char Algorithme) {
 
     List_Noeuds list;
     list.head = NULL;
-    Noeud* n = new_noeud();
+    Noeud *n = new_noeud();
     n->valeur = tab_sequences_aligne[0].ID;
 
-    Element* temp = (Element*)malloc(sizeof(Element));
+    Element *temp = (Element *)malloc(sizeof(Element));
     temp->next = NULL;
     temp->data = n;
     list.head = temp;
     list.nb_elements = 1;
 
-    for (int i = 1; i < nb_entries; i++) {
-        Noeud* n = new_noeud();
+    for (int i = 1; i < nb_entries; i++)
+    {
+        Noeud *n = new_noeud();
         n->valeur = tab_sequences_aligne[i].ID;
         add_Noeud(&list, n);
     }
 
     Arbre a;
-    if (Algorithme == 'U') {
+    if (Algorithme == 'U')
+    {
         printf("Arbre UPGMA construit pour le fichier '%s' :\n", file_aligne);
         a = UPGMA(nb_entries, &list, matrice_distance);
     }
-    else {
+    else
+    {
         printf("Arbre NEIGHBOR JOINING construit pour le fichier '%s' :\n", file_aligne);
         a = Neighbor_Joining(nb_entries, &list, matrice_distance);
     }
