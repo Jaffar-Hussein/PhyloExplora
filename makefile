@@ -11,7 +11,7 @@ CC=gcc
 
 #On ignore les warnings -> ceci n'est pas conseille!
 #Mais je fais ça pour simplifier la vie
-CFLAGS=-w
+CFLAGS=-w -g
 
 all: phylo
 

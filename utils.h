@@ -84,3 +84,13 @@ typedef struct Arbre
 } Arbre;
 
 void show_tree(char *file_aligne, char Algorithme);
+
+
+// void needleman_wunsch();
+// void print_quality_alignement();
+// float score_alignement();
+// void set_empty_string();
+// void set_sequence();
+// void show_distance_matrix();
+// void show_sequences_file();
+// void show_tree();

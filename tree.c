@@ -625,6 +625,8 @@ Arbre Neighbor_Joining(int entries, List_Noeuds *list, float matrice_distance[][
     while (nb_noeuds > 1) {
         list = fuse_matrice_NJ(list->nb_elements, list, matrice_distance);
         nb_noeuds = get_nb_noeuds(list);
+        printf("Number of nodes after fusion: %d\n", nb_noeuds);
+        // print_(list);
     }
 
     Arbre a;

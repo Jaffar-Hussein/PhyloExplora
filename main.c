@@ -12,7 +12,7 @@ Sujet propose par George Marchment
 int main(int argc, char *argv[])
 {
     int SEQUENCES = 0;
-    int ALIGNEMENT = 0;
+    int ALIGNEMENT = 1;
     int MATRICE_DISTANCE = 0;
     int UPGMA = 0;
     int NJ = 0;
