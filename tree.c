@@ -434,10 +434,13 @@ Arbre Neighbor_Joining(int entries, List_Noeuds *list, float matrice_distance[][
 {
 
     int nb_noeuds = get_nb_noeuds(list);
+    printf("Initial number of nodes: %d\n", nb_noeuds);
     while (nb_noeuds > 1)
     {
         list = fuse_matrice_NJ(entries, list, matrice_distance);
         nb_noeuds = get_nb_noeuds(list);
+        printf("Number of nodes after fusion: %d\n", nb_noeuds);
+        // print_(list);
     }
 
     Arbre a;
@@ -495,5 +498,9 @@ void show_tree(char *file_aligne, char Algorithme)
         a = Neighbor_Joining(nb_entries, &list, matrice_distance);
     }
     afficher_arbre_plat(&a);
+    // show the arbe A
+
+
+
     // new_affichage(&a);
 }

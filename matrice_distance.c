@@ -44,7 +44,7 @@ Main : Fonction qui applique la correction de Jukes-Cantor
 */
 float jukes_cantor(float x)
 {
-    return -0.75 * log(1 - (4.0 / 3.0) * x);
+    return ((-0.75) * log(1 - (4.0 / 3.0) * x));
 }
 
 /*-------------------------------------------------
@@ -62,7 +62,7 @@ void initialise_matrice(int entries, float matrice_distance[][entries])
     {
         for (int j = 0; j < entries; j++)
         {
-            matrice_distance[i][j] = 0;
+            matrice_distance[i][j] = 0.0;
         }
     }
 }
@@ -80,12 +80,12 @@ void print_matrix_float(int n, int m, float matrix[][m])
         {
             if (j < i)
             {
-                printf("%9f ", matrix[i][j]);
+                printf("%10f ", matrix[i][j]);
             }
-            else
-            {
-                printf("     .    ");
-            }
+            // else
+            // {
+            //     printf("      .    ");
+            // }
         }
         printf("\n");
     }
