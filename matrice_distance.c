@@ -16,11 +16,9 @@ Main : Fonction qui retourne la distance entre deux sequences
 */
 float distance(Sequence seq1, Sequence seq2)
 {
-    float substitutions = 0;
-    float total = 0;
-    int length = strlen(seq1.seq);
-
-    for (int i = 0; i < length; i++)
+    int substitutions = 0;
+    int total = 0;
+    for (int i = 0; seq1.seq[i] != '\0' && seq2.seq[i] != '\0'; i++)
     {
         if (seq1.seq[i] != '-' && seq2.seq[i] != '-')
         {
@@ -31,10 +29,7 @@ float distance(Sequence seq1, Sequence seq2)
             }
         }
     }
-    // printf (float)substitutions / total;
-    // printf("substitutions: %f\n", substitutions/total);
-    return substitutions / total;
-
+    return(float)substitutions / total;
 }
 
 /*
@@ -44,7 +39,7 @@ Main : Fonction qui applique la correction de Jukes-Cantor
 */
 float jukes_cantor(float x)
 {
-    return ((-0.75) * log(1 - (4.0 / 3.0) * x));
+    return -0.75 * log(1 - (4.0 / 3.0) * x);
 }
 
 /*-------------------------------------------------
@@ -80,12 +75,12 @@ void print_matrix_float(int n, int m, float matrix[][m])
         {
             if (j < i)
             {
-                printf("%10f ", matrix[i][j]);
+                printf("%9f ", matrix[i][j]);
             }
-            // else
-            // {
-            //     printf("      .    ");
-            // }
+            else
+            {
+                printf("     .    ");
+            }
         }
         printf("\n");
     }
@@ -96,26 +91,16 @@ Input : entier, matrice de float et une liste de sequence
 Output : None
 Main : Procedure qui remplit la matrice avec la distance entre les sequences
 */
-void fill_distance_matrix(int entries, float matrice_distance[][entries], Sequence sequences[])
+void fill_distance_matrix(int entries, float distance_matrix[][entries], Sequence sequences[])
 {
     for (int i = 0; i < entries; i++)
     {
-        for (int j = 0; j < entries; j++)
-
+        for (int j = 0; j < i; j++)
         {
-            float p_distance = distance(sequences[i], sequences[j]);
-
-            matrice_distance[j][i] = jukes_cantor(p_distance);
+            float pairwise_distance = distance(sequences[i], sequences[j]);
+            distance_matrix[i][j] = jukes_cantor(pairwise_distance);
         }
     }
-    // print whole matrix
-
-    // for(int i = 0; i < entries; i++){
-    //     for(int j = 0; j < entries; j++){
-    //         printf("%f ", matrice_distance[i][j]);
-    //     }
-    //     printf("\n");
-    // }
 }
 
 /*
