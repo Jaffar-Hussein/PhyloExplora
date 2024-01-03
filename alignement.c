@@ -94,19 +94,18 @@ Main : Procedure qui Initialise la matrice M
 */
 void initialise_M(int n, int m, int M[n][m])
 {
-    // fill the first gap
-    M[0][0] = 0;
+    int gap_penalty = similarity_matrix[0][get_val_base('-')];
 
     // fill the first row
-    for (int j = 1; j < m; j++)
+    for (int j = 0; j < m; j++)
     {
-        M[0][j] = M[0][j - 1] - 5;
+        M[j][0] = j * gap_penalty;
     }
 
     // fill the first column
-    for (int i = 1; i < n; i++)
+    for (int i = 0; i < n; i++)
     {
-        M[i][0] = M[i - 1][0] - 5;
+        M[0][i] = i * gap_penalty;
     }
 }
 
@@ -150,6 +149,11 @@ char symbole(int entier)
     }
     return 'u';
 }
+/**
+ * Reverses a given string in-place.
+ *
+ * @param str The string to be reversed.
+ */
 void strrev(char *str)
 {
     if (str)
@@ -163,7 +167,6 @@ void strrev(char *str)
             temp = *start;
             *start = *end;
             *end = temp;
-
             start++;
             end--;
         }
@@ -214,36 +217,18 @@ Main : Procedure qui applique la formule Mij et qui sauvegarde
 */
 void fonction_Mij(Sequence *s1, Sequence *s2, int i, int j, int n, int m, int M[n][m], int *max, int *index)
 {
-    // Mij = max(M,-1,-1 + s(A, B), M,-1 + S(A, gap), Mi-j + s(B, gap))
-    // printf("seq1 : %s\n", s1->seq);
-    // printf("seq2 : %s\n", s2->seq);
-    int score_diagonal = M[i - 1][j - 1] + similarity_score(s1->seq[j - 1], s2->seq[i - 1]);
-    int score_left = M[i][j - 1] + similarity_score(s1->seq[j - 1], '-');
-    int score_up = M[i - 1][j] + similarity_score('-', s2->seq[i - 1]);
-    // max of the 3 scores
-    // if (i = 7 && j == 6)
-    // {
-    //     printf("M : %d\n", M[i - 1][j - 1]);
-    //     printf("score_diagonal : %d\n", score_diagonal);
-    //     printf("score_left : %d\n", score_left);
-    //     printf("score_up : %d\n", score_up);
-    // }
+    int score_diagonal = M[i - 1][j - 1] + similarity_score(s1->seq[i - 1], s2->seq[j - 1]);
+    int score_left = M[i][j - 1] + similarity_score(s1->seq[i - 1], '-');
+    int score_up = M[i - 1][j] + similarity_score('-', s2->seq[j - 1]);
+    // get the max
     *max = max3(score_diagonal, score_left, score_up);
-    printf("score on row %d and column %d : %d\n", i, j, max3(score_diagonal, score_left, score_up));
-
     // send back the index
     if (*max == score_left)
-    {
         *index = 1;
-    }
     else if (*max == score_up)
-    {
         *index = 2;
-    }
     else
-    {
         *index = 0;
-    }
 }
 
 /*
@@ -256,86 +241,54 @@ Main : Procedure qui applique l'algorithme Needleman-Wunsch
 */
 void needleman_wunsch(Sequence seq1, Sequence seq2, char *alignement1, char *alignement2)
 {
-    // Create the sizes of the tables and add 1 for the gap
     int n = strlen(seq1.seq) + 1;
     int m = strlen(seq2.seq) + 1;
 
-    // printf("n : %d\n", n);
-    // printf("m : %d\n", m);
-    // The max and index to be passed by reference
-    int max = 0;
-    int index = 0;
-    // The two tables
+    // The scoring and traceback matrices
     int M[n][m];
     char T[n][m];
 
+    // Initialize the matrices
     initialise_M(n, m, M);
     initialise_T(n, m, T);
-
-    // Fill the spaces as of index 1,1
     for (int i = 1; i < n; i++)
     {
         for (int j = 1; j < m; j++)
         {
+            int max, index;
             fonction_Mij(&seq1, &seq2, i, j, n, m, M, &max, &index);
-            printf("max i = %d , j = %d : %d\n", i, j, max);
             M[i][j] = max;
             T[i][j] = symbole(index);
         }
     }
 
-    // print the last position
-    printf("$$$max : %d\n", M[m][n]);
-    // Print the M matrix
-    // Print column numbers
-    printf("\t");
-    for (int j = 0; j < m; j++)
-    {
-        printf("Col%d\t", j);
-    }
-    printf("\n");
-
-    // Print each row with its row number
-    for (int i = 0; i < n; i++)
-    {
-        printf("Row%d\t", i); // print row number
-        for (int j = 0; j < m; j++)
-        {
-            printf("%d\t", M[i][j]); // print cell value
-        }
-        printf("\n");
-    }
-    printf("\n");
-    // Getting the best alignment by the traceback matrix
-    int i = n;
-    int j = m;
+    // Traceback and build the alignments
+    int i = n - 1;
+    int j = m - 1;
     while (T[i][j] != 'o')
     {
         if (T[i][j] == 'd')
         {
-
-            appendString(alignement1, seq1.seq[j--]);
-            appendString(alignement2, seq2.seq[j--]);
-            // i--;
-            // j--;
+            appendString(alignement1, seq1.seq[i - 1]);
+            appendString(alignement2, seq2.seq[j - 1]);
+            i--;
+            j--;
         }
-        else if (T[i][j] == 'l')
+        else if (T[i][j] == 'u')
+        {
+            appendString(alignement1, seq1.seq[i - 1]);
+            appendString(alignement2, '-');
+            i--;
+        }
+        else // T[i][j] == 'l'
         {
             appendString(alignement1, '-');
-            appendString(alignement2, seq2.seq[j--]);
-            // j--;
-        }
-        else
-        {
-            appendString(alignement1, seq1.seq[i--]);
-            appendString(alignement2, '-');
-            // i--;
+            appendString(alignement2, seq2.seq[j - 1]);
+            j--;
         }
     }
 
+    // Reverse the alignments
     reverse_string(alignement1);
     reverse_string(alignement2);
-
-    printf("alignement1 : %s\n", alignement1);
-    printf("alignement2 : %s\n", alignement2);
 }
