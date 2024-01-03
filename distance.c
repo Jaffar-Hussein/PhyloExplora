@@ -2,11 +2,9 @@
 
 float distance(Sequence seq1, Sequence seq2)
 {
-    float substitutions = 0;
-    float total = 0;
-    int length = strlen(seq1.seq);
-
-    for (int i = 0; i < length; i++)
+    int substitutions = 0;
+    int total = 0;
+    for (int i = 0; seq1.seq[i] != '\0' && seq2.seq[i] != '\0'; i++)
     {
         if (seq1.seq[i] != '-' && seq2.seq[i] != '-')
         {
@@ -17,9 +15,7 @@ float distance(Sequence seq1, Sequence seq2)
             }
         }
     }
-    // printf (float)substitutions / total;
-    // printf("substitutions: %f\n", substitutions/total);
-    return substitutions / total;
+    return (float)substitutions / total;
 }
 
 /*
@@ -47,11 +43,10 @@ void initialise_matrice(int entries, float matrice_distance[][entries])
     {
         for (int j = 0; j < entries; j++)
         {
-            matrice_distance[i][j] = 0;
+            matrice_distance[i][j] = 0.0;
         }
     }
 }
-
 /*
 Input : Deux entiers et Une matrice de float
 Output : None
@@ -81,26 +76,16 @@ Input : entier, matrice de float et une liste de sequence
 Output : None
 Main : Procedure qui remplit la matrice avec la distance entre les sequences
 */
-void fill_distance_matrix(int entries, float matrice_distance[][entries], Sequence sequences[])
+void fill_distance_matrix(int entries, float distance_matrix[][entries], Sequence sequences[])
 {
     for (int i = 0; i < entries; i++)
     {
-        for (int j = 0; j < entries; j++)
-
+        for (int j = 0; j < i; j++)
         {
-            float p_distance = distance(sequences[i], sequences[j]);
-
-            matrice_distance[j][i] = jukes_cantor(p_distance);
+            float pairwise_distance = distance(sequences[i], sequences[j]);
+            distance_matrix[i][j] = jukes_cantor(pairwise_distance);
         }
     }
-    // print whole matrix
-
-    // for(int i = 0; i < entries; i++){
-    //     for(int j = 0; j < entries; j++){
-    //         printf("%f ", matrice_distance[i][j]);
-    //     }
-    //     printf("\n");
-    // }
 }
 
 /*
@@ -167,7 +152,6 @@ void set_id(Sequence *sequence, char *ID)
     }
     sequence->ID[length] = '\0';
 }
-
 /*
 Input : une sequence et une chaîne de caracteres
 Output : None
@@ -245,7 +229,6 @@ int get_number_entries(char *address)
     fclose(ptr);
     return num;
 }
-
 /*
 Input : Adresse d'un fichier
 Output : Une chaîne de caracteres
@@ -273,7 +256,6 @@ char *readFile(char *fileName)
     code[n] = '\0';
     return code;
 }
-
 /*
 Input : - une chaîne de caracteres correspondant au code
         - un entier correspondant à la position start, à partir de laquelle on va commencer à chercher
@@ -284,43 +266,45 @@ Main : Fonction qui prend le code ainsi qu'une position start, elle va chercher 
        Elle retourne ensuite la derniere position qui est lu. Pour le cas de la derniere
        sequence elle retourne -1
 */
-int extract_next_sequence(char *code, int start, Sequence *sequence)
+int extract_next_sequence(char *code, int start_index, Sequence *sequence)
 {
-    int flag = 0;
+    int is_reading_id = 1;
     char id[ID_MAX_LENGTH];
-    char seq[seq_MAX_LENGTH];
     set_empty_string(id);
+    char seq[seq_MAX_LENGTH];
     set_empty_string(seq);
 
-    // Increment start at the beginning of the loop
-    while (code[++start] != '>' && code[start] != '\0')
+    while (code[++start_index] != '>' && code[start_index] != '\0')
     {
-        // If we haven't encountered a newline character yet, we're still reading the ID
-        if (code[start] != '\n' && flag == 0)
+        if (is_reading_id == 1)
         {
-            appendString(id, code[start]);
+            if (code[start_index] == '\n')
+            {
+                is_reading_id = 0;
+            }
+            else
+            {
+                appendString(id, code[start_index]);
+            }
         }
         else
         {
-            // Once we encounter a newline character, we start reading the sequence
-            flag = 1;
-            if (code[start] != '\n' && code[start] != '>')
+            if (code[start_index] != '\n')
             {
-                appendString(seq, code[start]);
+                appendString(seq, code[start_index]);
             }
         }
     }
 
-    // If we've reached the end of the string, return -1
-    if (code[start] == '\0')
+    set_sequence(sequence, id, seq);
+
+    if (code[start_index] == '\0')
     {
         return -1;
     }
     else
     {
-        // Otherwise, set the sequence and return the current position
-        set_sequence(sequence, id, seq);
-        return start;
+        return start_index;
     }
 }
 
@@ -343,7 +327,6 @@ void parse_file(char *address, Sequence tab_sequences[])
         tab_sequences[counter++] = sequence;
     }
 }
-
 /*
 Input : Adresse d'un fichier
 Output : None
@@ -358,13 +341,22 @@ void show_sequences_file(char *file)
     Sequence tab_sequences[nb_entries];
     parse_file(file, tab_sequences);
 
-    for (int i = 0; i < nb_entries; i++)
-    {
-        affiche_sequence(&tab_sequences[i]);
-        printf("\n");
-    }
+    // for (int i = 0; i < nb_entries; i++)
+    // {
+    //     affiche_sequence(&tab_sequences[i]);
+    //     printf("\n");
+    // }
 }
-
+/*----------------------------------------------------
+      *
+     /|\
+    / | \
+   /  |  \
+  /   |   \
+ /    |    \
+/_____|_____\
+     |||
+------------------------------------------------*/
 int max(int a, int b)
 {
     if (a > b)
@@ -412,7 +404,10 @@ Main : Procedure qui trouve la valeur min dans la matrice Inferieur et stocke ce
 void find_min_index_distance_matrix(int entries, int nb_noeud, float matrice_distance[][entries], float *min, int *i_min, int *j_min)
 {
     // TODO -- what is nb_noued for ?
-
+    if (entries == 0)
+    {
+        return;
+    }
     *min = matrice_distance[1][0];
     *i_min = 1;
     *j_min = 0;
@@ -629,17 +624,23 @@ Main : Fonction qui regroupe ensemble les deux noeuds qui se trouvent à l'index
 */
 List_Noeuds *group_together(List_Noeuds *list_param, int i, int j)
 {
-    // TODO
     Noeud *n = new_noeud();
     n->suivant_left = get_noeud_from_list(list_param, i);
     n->suivant_right = get_noeud_from_list(list_param, j);
     n->nb_noeud = n->suivant_left->nb_noeud + n->suivant_right->nb_noeud;
+
     List_Noeuds *list = (List_Noeuds *)malloc(sizeof(List_Noeuds));
-    Element *e = (Element *)malloc(sizeof(Element));
-    e->data = n;
-    list->head = e;
-    // list->head = n;
-    list->nb_elements = 1;
+    if (list == NULL)
+    {
+        printf("Error: Memory allocation failed.\n");
+        return NULL;
+    }
+
+    list->head = NULL;
+    list->nb_elements = 0;
+
+    add_Noeud(list, n);
+
     for (int k = 0; k < get_nb_noeuds(list_param); k++)
     {
         if (k != i && k != j)
@@ -647,6 +648,7 @@ List_Noeuds *group_together(List_Noeuds *list_param, int i, int j)
             add_Noeud(list, get_noeud_from_list(list_param, k));
         }
     }
+
     return list;
 }
 
@@ -655,42 +657,50 @@ Fonctions pour UPGMA
 --------------------*/
 
 /*
-Input : - taille de la matrice (entier)
-        - pointeur d'une Liste de Noeud
-        - matrice de float
-        - 3 entiers
-Output : float
-Main : Fonction qui calcule la valeur d'une nouvelle cellule dans la matrice à partir de la formule d_ij,k
+This function calculates the value of a new cell in the matrix using the UPGMA formula.
+It takes as input the size of the matrix, a pointer to a list of nodes, the distance matrix, and the indices of three nodes.
+It returns the calculated value as a float.
 */
 float calcule_new_cell(int entries, List_Noeuds *list, float matrice_distance[][entries], int i, int j, int k)
 {
-    // TODO
+    // printf("i: %d, j: %d, k: %d\n", i, j, k);
+
+    // Get the nodes at indices i and j from the list
     Noeud *node_i = get_noeud_from_list(list, i);
     Noeud *node_j = get_noeud_from_list(list, j);
+
+    // printf("node_i: %p, node_j: %p\n", (void *)node_i, (void *)node_j);
+
+    // Get the number of nodes in each cluster and the distances from the matrix
     float n_i = node_i->nb_noeud;
     float n_j = node_j->nb_noeud;
     float d_ik = matrice_distance[i][k];
     float d_jk = matrice_distance[j][k];
 
-    return (n_i / (n_i + n_j)) * d_ik + (n_j / (n_i + n_j)) * d_jk;
+    // printf("n_i: %f, n_j: %f, d_ik: %f, d_jk: %f\n", n_i, n_j, d_ik, d_jk);
+
+    // Calculate and return the new cell value using the UPGMA formula
+    float new_cell_value = (n_i / (n_i + n_j)) * d_ik + (n_j / (n_i + n_j)) * d_jk;
+    // printf("new_cell_value: %f\n", new_cell_value);
+
+    return new_cell_value;
 }
 
 /*
-Input : - taille de la matrice (entier)
-        - pointeur d'une Liste de Noeud
-        - matrice de float
-Output : pointeur d'une Liste de Noeud
-Main : Fonction qui effectue une etape de l'algorithme de UPGMA et qui retourne un pointeur
-      sur une nouvelle liste de noeuds
+This function performs one step of the UPGMA algorithm.
+It takes as input the size of the matrix, a pointer to a list of nodes, and the distance matrix.
+It returns a pointer to a new list of nodes.
 */
 List_Noeuds *fuse_matrice_upgma(int entries, List_Noeuds *list, float matrice_distance[][entries])
 {
-    // TODO
+    // Find the pair of nodes with the smallest distance
     int i, j;
     float min;
-
-    // Use find_min_index_distance_matrix to find the pair of nodes with the smallest distance
     find_min_index_distance_matrix(entries, 0, matrice_distance, &min, &i, &j);
+
+    printf("i_min: %d\n", i);
+    printf("j_min: %d\n", j);
+    printf("min: %f\n", min);
 
     // Create a new node that groups together the nodes at indices i and j
     Noeud *new_node = new_noeud();
@@ -698,57 +708,74 @@ List_Noeuds *fuse_matrice_upgma(int entries, List_Noeuds *list, float matrice_di
     new_node->suivant_right = get_noeud_from_list(list, j);
     new_node->nb_noeud = new_node->suivant_left->nb_noeud + new_node->suivant_right->nb_noeud;
 
-    // Create a new distance matrix
-    float new_matrice_distance[entries - 1][entries - 1];
+    printf("New node created\n");
 
-    // Fill the new distance matrix
-    for (int k = 0; k < entries - 1; k++)
+    // Create and fill a new distance matrix
+    printf("New distance matrix created  9\n");
+    for (int i = 0; i < entries - 1; i++)
     {
-        for (int l = 0; l < entries - 1; l++)
+        for (int j = 0; j < i; j++)
         {
-            if (k == l)
-            {
-                new_matrice_distance[k][l] = 0;
-            }
-            else if (k == i || k == j || l == i || l == j)
-            {
-                new_matrice_distance[k][l] = calcule_new_cell(entries, list, matrice_distance, i, j, k);
-            }
-            else
-            {
-                new_matrice_distance[k][l] = matrice_distance[k][l];
-            }
+            printf("%f ", matrice_distance[i][j]);
+        }
+        printf("\n");
+    }
+    // Update the distances in the matrix for the merged nodes
+    for (int k = 0; k < entries; k++)
+    {
+        if (k != i && k != j)
+        {
+            matrice_distance[i][k] = matrice_distance[k][i] = calcule_new_cell(entries, list, matrice_distance, i, j, k);
         }
     }
 
-    // Create a new list of nodes
+    // Mark the row and column for the second merged node as unused
+    for (int k = 0; k < entries; k++)
+    {
+        matrice_distance[j][k] = matrice_distance[k][j] = -1;
+    }
+    printf("New distance matrix created\n");
+    for (int i = 0; i < entries - 1; i++)
+    {
+        for (int j = 0; j < entries; j++)
+        {
+            printf("%f ", matrice_distance[i][j]);
+        }
+        printf("\n");
+    }
+    
     List_Noeuds *new_list = group_together(list, i, j);
+
+    printf("New list created\n");
 
     return new_list;
 }
 
 /*
-Input : - taille de la matrice (entier)
-        - pointeur d'une Liste de Noeuds
-        - matrice de float
-Output : Un arbre
-Main : Fonction qui effectue l'algorithme de UPGMA et qui retourne un arbre
+This function performs the UPGMA algorithm and returns a tree.
+It takes as input the size of the matrix, a pointer to a list of nodes, and the distance matrix.
 */
 Arbre UPGMA(int entries, List_Noeuds *list, float matrice_distance[][entries])
 {
-
+    // Perform the UPGMA algorithm until there is only one node left
     int nb_noeuds = get_nb_noeuds(list);
     while (nb_noeuds > 1)
     {
+        printf("Before fuse_matrice_upgma\n");
         list = fuse_matrice_upgma(entries, list, matrice_distance);
+        printf("After fuse_matrice_upgma\n");
         nb_noeuds = get_nb_noeuds(list);
     }
-    // print out the list nodes
+
+    // Print out the list nodes
     for (int i = 0; i < nb_noeuds; i++)
     {
+        printf("Before accessing node %d\n", i);
         printf("%s\n", get_noeud_from_list(list, i)->valeur);
+        printf("After accessing node %d\n", i);
     }
 
+    // Create a tree with the final node as the root
     Arbre a;
     a.tete = list->head->data;
 
@@ -811,12 +838,12 @@ Arbre Neighbor_Joining(int entries, List_Noeuds *list, float matrice_distance[][
 {
 
     int nb_noeuds = get_nb_noeuds(list);
-    printf("Initial number of nodes: %d\n", nb_noeuds);
+    // printf("Initial number of nodes: %d\n", nb_noeuds);
     while (nb_noeuds > 1)
     {
         list = fuse_matrice_NJ(entries, list, matrice_distance);
         nb_noeuds = get_nb_noeuds(list);
-        printf("Number of nodes after fusion: %d\n", nb_noeuds);
+        // printf("Number of nodes after fusion: %d\n", nb_noeuds);
         // print_(list);
     }
 
@@ -824,22 +851,22 @@ Arbre Neighbor_Joining(int entries, List_Noeuds *list, float matrice_distance[][
     a.tete = list->head->data;
     return a;
 }
-void print_tree(Noeud *node)
-{
-    if (node == NULL)
-    {
-        return;
-    }
+// void print_tree(Noeud *node)
+// {
+//     if (node == NULL)
+//     {
+//         return;
+//     }
 
-    // Print the node value
-    printf("%s ", node->valeur);
+//     // Print the node value
+//     printf("%s ", node->valeur);
 
-    // Recur on the left subtree
-    print_tree(node->suivant_left);
+//     // Recur on the left subtree
+//     print_tree(node->suivant_left);
 
-    // Recur on the right subtree
-    print_tree(node->suivant_right);
-}
+//     // Recur on the right subtree
+//     print_tree(node->suivant_right);
+// }
 //---------------------------------------------------------------------------------------
 
 /*
@@ -856,24 +883,24 @@ void show_tree(char *file_aligne, char Algorithme)
     Sequence tab_sequences_aligne[nb_entries];
     // print tab sequence
 
-    for (int i = 0; i < nb_entries; i++)
-    {
-        printf("%s\n", tab_sequences_aligne[i].ID);
-    }
+    // for (int i = 0; i < nb_entries; i++)
+    // {
+    //     printf("%s\n", tab_sequences_aligne[i].ID);
+    // }
     parse_file(file_aligne, tab_sequences_aligne);
 
     float matrice_distance[nb_entries][nb_entries];
     initialise_matrice(nb_entries, matrice_distance);
     fill_distance_matrix(nb_entries, matrice_distance, tab_sequences_aligne);
     // print out the distance matrix
-    for (int i = 0; i < nb_entries; i++)
-    {
-        for (int j = 0; j < nb_entries; j++)
-        {
-            printf("%f ", matrice_distance[i][j]);
-        }
-        printf("\n");
-    }
+    // for (int i = 0; i < nb_entries; i++)
+    // {
+    //     for (int j = 0; j < nb_entries; j++)
+    //     {
+    //         printf("%f ", matrice_distance[i][j]);
+    //     }
+    //     printf("\n");
+    // }
     List_Noeuds list;
     list.head = NULL;
     Noeud *n = new_noeud();
@@ -893,24 +920,12 @@ void show_tree(char *file_aligne, char Algorithme)
     }
 
     // Print out all the nodes in the list
-    for (int i = 0; i < nb_entries; i++)
-    {
-        printf("%s\n", get_noeud_from_list(&list, i)->valeur);
-    }
+    // for (int i = 0; i < nb_entries; i++)
+    // {
+    //     printf("%s\n", get_noeud_from_list(&list, i)->valeur);
+    // }
 
     Arbre a;
-
-    // check if arbre is NULL
-    if (a.tete == NULL)
-    {
-        printf("Arbre NULL\n");
-    }
-    else
-    {
-        printf("Arbre non NULL\n");
-        // printf("%s\n", a.tete->valeur);
-        printf("----");
-    }
 
     if (Algorithme == 'U')
     {
@@ -918,11 +933,11 @@ void show_tree(char *file_aligne, char Algorithme)
         a = UPGMA(nb_entries, &list, matrice_distance);
         // print_tree(a.tete);
     }
-    // else
-    // {
-    //     printf("Arbre NEIGHBOR JOINING construit pour le fichier '%s' :\n", file_aligne);
-    //     a = Neighbor_Joining(nb_entries, &list, matrice_distance);
-    // }
+    else
+    {
+        printf("Arbre NEIGHBOR JOINING construit pour le fichier '%s' :\n", file_aligne);
+        a = Neighbor_Joining(nb_entries, &list, matrice_distance);
+    }
     afficher_arbre_plat(&a);
     // show the arbe A
 
@@ -933,7 +948,7 @@ int main()
 {
 
     // Matrix
-  
+
     // Matrix
     char *file = "cat_dna.fasta";
     char *file_aligne = "cat_dna_aligne.fasta";
