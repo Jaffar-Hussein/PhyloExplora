@@ -149,20 +149,18 @@ Main : Procedure qui Initialise la matrice M
 */
 void initialise_M(int n, int m, int M[n][m])
 {
-    // fill the first gap
-    M[0][0] = 0;
+    int gap_penalty = similarity_matrix[0][get_val_base('-')];
 
     // fill the first row
-    for (int j = 1; j < m; j++)
+    for (int j = 0; j < m; j++)
     {
-        M[0][j] = M[0][j - 1] + similarity_matrix[0][get_val_base('-')];
+        M[j][0] = j * gap_penalty;
     }
 
     // fill the first column
-    for (int i = 1; i < n; i++)
+    for (int i = 0; i < n; i++)
     {
-        // M[i][0] = M[i - 1][0] - 5;
-        M[i][0] = M[i - 1][0] + similarity_matrix[0][get_val_base('-')];
+        M[0][i] = i * gap_penalty;
     }
 }
 
@@ -177,13 +175,13 @@ void initialise_T(int n, int m, char T[n][m])
     T[0][0] = 'o';
 
     // fill the first row
-    for (int j = 1; j < m + 1; j++)
+    for (int j = 1; j < m; j++)
     {
         T[0][j] = 'l';
     }
 
     // fill the first column
-    for (int i = 1; i < n + 1; i++)
+    for (int i = 1; i < n; i++)
     {
         T[i][0] = 'u';
     }
@@ -270,27 +268,18 @@ Main : Procedure qui applique la formule Mij et qui sauvegarde
 */
 void fonction_Mij(Sequence *s1, Sequence *s2, int i, int j, int n, int m, int M[n][m], int *max, int *index)
 {
-    int similarity = similarity_score(s1->seq[j - 1], s2->seq[i - 1]);
-    int score_diagonal = M[i - 1][j - 1] + similarity;
-    int similarity_left = similarity_score(s1->seq[j - 1], '-');
-    int score_left = M[i][j - 1] + similarity_score(s1->seq[i - 1], '_');
-    int similarity_up = similarity_score('-', s2->seq[i - 1]);
-    int score_up = M[i - 1][j] + similarity_score(s2->seq[j - 1], '_');
-
+    int score_diagonal = M[i - 1][j - 1] + similarity_score(s1->seq[i - 1], s2->seq[j - 1]);
+    int score_left = M[i][j - 1] + similarity_score(s1->seq[i - 1], '-');
+    int score_up = M[i - 1][j] + similarity_score('-', s2->seq[j - 1]);
+    // get the max
     *max = max3(score_diagonal, score_left, score_up);
     // send back the index
     if (*max == score_left)
-    {
         *index = 1;
-    }
     else if (*max == score_up)
-    {
         *index = 2;
-    }
     else
-    {
         *index = 0;
-    }
 }
 
 /*
@@ -303,80 +292,54 @@ Main : Procedure qui applique l'algorithme Needleman-Wunsch
 */
 void needleman_wunsch(Sequence seq1, Sequence seq2, char *alignement1, char *alignement2)
 {
-    printf("seq1 : %s\n", seq1.seq);
-    // Create the sizes of the tables and add 1 for the gap
-    int n = strlen(seq2.seq) + 1;
-    int m = strlen(seq1.seq) + 1;
-    printf("n : %d\n", n);
-    printf("m : %d\n", m);
-    // The max and index to be passed by reference
-    int max = 0;
-    int index = 0;
+    int n = strlen(seq1.seq) + 1;
+    int m = strlen(seq2.seq) + 1;
 
-    // The two tables
+    // The scoring and traceback matrices
     int M[n][m];
     char T[n][m];
 
-    // Initialise the M and T tables
+    // Initialize the matrices
     initialise_M(n, m, M);
     initialise_T(n, m, T);
-
-    // Fill the M and T tables starting from index 1,1
     for (int i = 1; i < n; i++)
     {
         for (int j = 1; j < m; j++)
         {
+            int max, index;
             fonction_Mij(&seq1, &seq2, i, j, n, m, M, &max, &index);
-            printf("score on row %d and column %d : %d\n", i, j, max);
             M[i][j] = max;
             T[i][j] = symbole(index);
         }
     }
 
-    // Print the M matrix
-    printf("Matrix M:\n");
-
-    for (int i = 0; i < n; i++)
-    {
-        for (int j = 0; j < m; j++)
-        {
-            printf("%d\t", M[i][j]);
-        }
-        printf("\n");
-    }
-    printf("Matrix T:\n");
-
-    for (int i = 0; i < n; i++)
-    {
-        for (int j = 0; j < m; j++)
-        {
-            printf("%c\t", T[i][j]);
-        }
-        printf("\n");
-    }
-    // Traceback to get the best alignment
-    int i = n;
-    int j = m;
+    // Traceback and build the alignments
+    int i = n - 1;
+    int j = m - 1;
     while (T[i][j] != 'o')
     {
         if (T[i][j] == 'd')
         {
-            appendString(alignement1, seq1.seq[j--]);
-            appendString(alignement2, seq2.seq[j--]);
+            appendString(alignement1, seq1.seq[i - 1]);
+            appendString(alignement2, seq2.seq[j - 1]);
+            i--;
+            j--;
         }
-        else if (T[i][j] == 'l')
+        else if (T[i][j] == 'u')
+        {
+            appendString(alignement1, seq1.seq[i - 1]);
+            appendString(alignement2, '-');
+            i--;
+        }
+        else // T[i][j] == 'l'
         {
             appendString(alignement1, '-');
-            appendString(alignement2, seq2.seq[j--]);
-        }
-        else
-        {
-            appendString(alignement1, seq1.seq[i--]);
-            appendString(alignement2, '-');
+            appendString(alignement2, seq2.seq[j - 1]);
+            j--;
         }
     }
 
-    // Reverse the alignments to get the final result
+    // Reverse the alignments
     reverse_string(alignement1);
     reverse_string(alignement2);
 }
