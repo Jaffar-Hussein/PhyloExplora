@@ -13,8 +13,8 @@ int main(int argc, char *argv[])
 {
     int SEQUENCES = 0;
     int ALIGNEMENT = 1;
-    int MATRICE_DISTANCE = 0;
-    int UPGMA = 0;
+    int MATRICE_DISTANCE = 1;
+    int UPGMA = 1;
     int NJ = 0;
 
     if (argc == 1)

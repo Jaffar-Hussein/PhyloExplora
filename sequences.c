@@ -172,43 +172,45 @@ Main : Fonction qui prend le code ainsi qu'une position start, elle va chercher 
        Elle retourne ensuite la derniere position qui est lu. Pour le cas de la derniere
        sequence elle retourne -1
 */
-int extract_next_sequence(char *code, int start, Sequence *sequence)
+int extract_next_sequence(char *code, int start_index, Sequence *sequence)
 {
-    int flag = 0;
+    int is_reading_id = 1;
     char id[ID_MAX_LENGTH];
-    char seq[seq_MAX_LENGTH];
     set_empty_string(id);
+    char seq[seq_MAX_LENGTH];
     set_empty_string(seq);
 
-    // Increment start at the beginning of the loop
-    while (code[++start] != '>' && code[start] != '\0')
+    while (code[++start_index] != '>' && code[start_index] != '\0')
     {
-        // If we haven't encountered a newline character yet, we're still reading the ID
-        if (code[start] != '\n' && flag == 0)
+        if (is_reading_id == 1)
         {
-            appendString(id, code[start]);
-        }
-        else
-        {
-            // Once we encounter a newline character, we start reading the sequence
-            flag = 1;
-            if (code[start] != '\n' && code[start] != '>')
+            if (code[start_index] == '\n')
             {
-                appendString(seq, code[start]);
+                is_reading_id = 0;
+            } 
+            else 
+            {
+                appendString(id, code[start_index]);
+            }
+        } 
+        else 
+        {
+            if (code[start_index] != '\n')
+            {
+                appendString(seq, code[start_index]);
             }
         }
     }
 
-    // If we've reached the end of the string, return -1
-    if (code[start] == '\0')
+    set_sequence(sequence, id, seq);
+
+    if (code[start_index] == '\0')
     {
         return -1;
     }
-    else
+    else 
     {
-        // Otherwise, set the sequence and return the current position
-        set_sequence(sequence, id, seq);
-        return start;
+        return start_index;
     }
 }
 
