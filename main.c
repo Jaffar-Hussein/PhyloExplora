@@ -66,7 +66,7 @@ int main(int argc, char *argv[])
         printf("----------------");
         printf("SEQUENCES");
         printf("----------------\n");
-        printf("Je vais parser le fichier : '%s'\n", file);
+        printf("Fichier: '%s'\n", file);
         show_sequences_file(file);
     }
 
@@ -102,7 +102,7 @@ int main(int argc, char *argv[])
         set_sequence(&seq2, "Sequence 2", "ATCTCGTGA");
         needleman_wunsch(seq1, seq2, alignement1, alignement2);
 
-        printf("On cherche à aligner '%s' et '%s' en utilisant l'algorithme Needleman Wunsch, on obtient comme alignement :\n", seq1.seq, seq2.seq);
+        printf("\nAlignement des sequences '%s' et '%s' en utilisant l'algorithme Needleman Wunsch:\n", seq1.seq, seq2.seq);
         print_quality_alignement(alignement1, alignement2, score_alignement(alignement1, alignement2));
     }
 

@@ -167,10 +167,8 @@ int extract_next_sequence(char* code, int start, Sequence* sequence) {
     char seq[seq_MAX_LENGTH];
     set_empty_string(seq);
     while (code[++start] != '>' && code[start] != '\0'){
-        /*printf("%c",code[start]);*/
         if (id_flag == 1){
             if (code[start] == '\n'){
-                /*printf("Passage à la séquence\n");*/
                 id_flag = 0;
             } else {
                 appendString(id,code[start]);
@@ -182,8 +180,6 @@ int extract_next_sequence(char* code, int start, Sequence* sequence) {
             }
         }
     }
-
-    //printf("Fin de boucle\n");
 
     set_sequence(sequence,id,seq);
     if (code[start] == '\0'){
@@ -204,7 +200,6 @@ void parse_file(char* address, Sequence tab_sequences[]) {
     int endf = 0, i = 0;
     while (endf != -1){
         endf = extract_next_sequence(data,endf,&tab_sequences[i++]);
-        /*printf("%d\n",endf);*/
     }
     free(data);
 }

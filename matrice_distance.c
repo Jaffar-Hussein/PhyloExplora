@@ -16,6 +16,16 @@ Main : Fonction qui retourne la distance entre deux sequences
 */
 float distance(Sequence seq1, Sequence seq2) {
     //TODO
+    float ev_step_count = 0.0, len = 0.0;
+    for(int i = 0; seq1.seq[i] != '\0';i++){
+        if ((seq1.seq[i] != '-') && (seq2.seq[i] != '-')){
+            if ((seq1.seq[i] !=  seq2.seq[i])){
+                ev_step_count += 1.0;
+            }
+            len += 1.0;
+        }
+    }
+    return (ev_step_count/len);
 }
 
 /*
@@ -68,6 +78,10 @@ void show_distance_matrix(char* file_aligne){
     Sequence tab_sequences_aligne[nb_entries];
     parse_file(file_aligne, tab_sequences_aligne);
 
+    /*for (int i = 0; i < nb_entries; i++) {
+        affiche_sequence(&tab_sequences_aligne[i]);
+        printf("\n");
+    }*/
     float matrice_distance[nb_entries][nb_entries];
     initialise_matrice(nb_entries, matrice_distance);
     fill_distance_matrix(nb_entries, matrice_distance, tab_sequences_aligne);
