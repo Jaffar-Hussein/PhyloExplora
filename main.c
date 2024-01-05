@@ -20,6 +20,7 @@ int main(int argc, char *argv[])
     if (argc == 1)
     {
         printf("\033[31mError: No arguments provided.\033[0m\n");
+        printf("\033[32mUsage: ./phylo ALL\033[0m\n");
         printf("\033[32mUsage: ./phylo SEQUENCES ALIGNEMENT MATRICE_DISTANCE UPGMA NJ\033[0m\n");
         return 1;
     }
@@ -28,7 +29,7 @@ int main(int argc, char *argv[])
     {
         for (int j = 0; j < strlen(argv[i]); j++)
         {
-            argv[i][j] = toupper((unsigned char)argv[i][j]);
+            argv[i][j] = toupper(argv[i][j]);
         }
         if (strcmp(argv[i], "ALL") == 0)
         {
@@ -61,6 +62,7 @@ int main(int argc, char *argv[])
         else
         {
             printf("\033[31mError: Invalid argument '%s'.\033[0m\n", argv[i]);
+            printf("\033[32mUsage: ./phylo ALL\033[0m\n");
             printf("\033[32mUsage: ./phylo SEQUENCES ALIGNEMENT MATRICE_DISTANCE UPGMA NJ\033[0m\n");
             return 1;
         }
@@ -70,9 +72,9 @@ int main(int argc, char *argv[])
 
     if (SEQUENCES == 1)
     {
-        printf("----------------");
-        printf("SEQUENCES");
-        printf("----------------\n");
+        printf("---------------- ");
+        printf(BOLD_TEXT UNDERLINE_TEXT "SEQUENCES" COLOR_RESET);
+        printf(" ----------------\n");
         printf("Je vais parser le fichier : '%s'\n", file);
         show_sequences_file(file);
     }
@@ -82,9 +84,9 @@ int main(int argc, char *argv[])
     */
     if (ALIGNEMENT == 1)
     {
-        printf("----------------");
-        printf("ALIGNEMENT");
-        printf("----------------\n");
+        printf("---------------- ");
+        printf(BOLD_TEXT UNDERLINE_TEXT "ALIGNEMENT" COLOR_RESET);
+        printf(" ----------------\n\n");
 
         char *ali1 = "-ACTCCTGA";
         char *ali2 = "ATCTCGTGA";
@@ -109,31 +111,31 @@ int main(int argc, char *argv[])
         set_sequence(&seq2, "Sequence 2", "ATCTCGTGA");
         needleman_wunsch(seq1, seq2, alignement1, alignement2);
 
-        printf("On cherche à aligner '%s' et '%s' en utilisant l'algorithme Needleman Wunsch, on obtient comme alignement :\n", seq1.seq, seq2.seq);
+        printf("\nOn cherche à aligner '%s' et '%s' en utilisant l'algorithme Needleman Wunsch, on obtient comme alignement :\n\n", seq1.seq, seq2.seq);
         print_quality_alignement(alignement1, alignement2, score_alignement(alignement1, alignement2));
     }
 
     if (MATRICE_DISTANCE == 1)
     {
-        printf("----------------");
-        printf("MATRICE DE DISTANCE");
-        printf("----------------\n");
+        printf("\n---------------- ");
+        printf(BOLD_TEXT UNDERLINE_TEXT "MATRICE DE DISTANCE" COLOR_RESET);
+        printf(" ----------------\n\n");
         show_distance_matrix(file_aligne);
     }
 
     if (UPGMA == 1)
     {
-        printf("----------------");
-        printf("UPGMA");
+        printf("---------------- ");
+        printf(BOLD_TEXT UNDERLINE_TEXT "UPGMA" COLOR_RESET);
         printf("----------------\n");
         show_tree(file_aligne, 'U');
     }
 
     if (NJ == 1)
     {
-        printf("----------------");
-        printf("NEIGHBOR JOINING");
-        printf("----------------\n");
+        printf("---------------- ");
+        printf(BOLD_TEXT UNDERLINE_TEXT "NEIGHBOR JOINING" COLOR_RESET);
+        printf(" ----------------\n\n");
         show_tree(file_aligne, 'N');
     }
 }

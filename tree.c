@@ -74,28 +74,27 @@ Main : Procedure qui trouve la valeur min dans la matrice Inferieur et stocke ce
        dans le pointeur et ces index dans les 2 autres pointeurs
 */
 void find_min_index_distance_matrix(int entries, int nb_noeud, float matrice_distance[][entries], float* min, int* i_min, int* j_min) {
-    //TODO
+    // Check if the matrix has at least one entry
     if (entries > 0){
         for (int i = 0; i < entries; i++){
             for (int j = (i+1); j < entries; j++){
-
+                // If it's the first pair of elements, initialize min, i_min, and j_min
                 if(i == 0 && j == 1){
                     *min = matrice_distance[j][i];
-                    //printf("Matrice distance : %f\n",matrice_distance[j][i]);
                     *i_min = i;
                     *j_min = j;
                 }
-                else {
-                    if(*min > matrice_distance[j][i]){
-                        *min = matrice_distance[j][i];
-                        //printf("Matrice distance : %f\n",matrice_distance[j][i]);
-                        *i_min = i;
-                        *j_min = j;
-                    }
+                // If the current element is smaller than min, update min, i_min, and j_min
+                else if(*min > matrice_distance[j][i]){
+                    *min = matrice_distance[j][i];
+                    *i_min = i;
+                    *j_min = j;
                 }
             }
         }
-    } else { printf("La matrice n'est pas de dimension correcte pour une recherche de valeur minimale !");}
+    } else { 
+        printf("La matrice n'est pas de dimension correcte pour une recherche de valeur minimale !");
+    }
 }
 
 /*--------------------------------
@@ -159,8 +158,9 @@ Input : pointeur sur un arbre
 Output : None
 Main : procedure qui affiche un arbre 
 */
+
+
 void new_affichage(Noeud* a,int* step, char mark){
-    //TODO
     static int root = 0;
     static int evtime = 0;
     int b = 0;
@@ -175,23 +175,18 @@ void new_affichage(Noeud* a,int* step, char mark){
             evtime = *step;
         }
         
-        //Branche Feuille
         for (int i = 1; i <= evtime; i++){
             if (i == (evtime)){
-                printf("----| %d%s\n",*step,a->valeur);
+                printf(COLOR_BLUE "----|" COLOR_GREEN " %d %s\n" COLOR_RESET, *step, a->valeur);
             }
             else {
-                /*if (i == 1)
-                {
-                    printf("\n");
-                }*/
                 if (*step != evtime && i >= *step){
                     if(b == 0){
-                        printf("|----");
+                        printf(COLOR_BLUE "|----" COLOR_RESET);
                         b = 1;
                     }
                     else {
-                        printf("-----");
+                        printf(COLOR_BLUE "-----" COLOR_RESET);
                     }
                 }
                 else {
@@ -199,40 +194,25 @@ void new_affichage(Noeud* a,int* step, char mark){
                 }
             }
         }
-        //printf("----|");
-        //printf("%d",*step);
-        //printf(" %s",a->valeur);
-        //printf("\n");
-        //Branche +1
         
         *step -= 1;
     }
     else {
-        /*if (a->nb_noeud > 1){
-            printf("     ");
-        }
-        else {
-            printf("----|");
-        }*/
-        //printf("     ");
         *step += 1;
         mark = 'l';
         new_affichage(a->suivant_left,step,mark);
-        //Apres une feuille forcément un noeud
         for(int i = 0; i < *step; i++){
             if (i == (*step-1)){
-                printf("|----|\n");
+                printf(COLOR_YELLOW "|----|\n" COLOR_RESET);
             }
             else {
                 printf("     ");
             }
         }
-        //printf("----|\n");
         *step += 1;
         mark = 'r';
         new_affichage(a->suivant_right,step,mark);
         *step -= 1;
-
     }
 }
 
@@ -247,11 +227,11 @@ void afficher_elem_plat(Noeud* e) {
 
     if (est_feuille(e)) printf("%s", e->valeur);
     else {
-        printf("(");
+        printf(COLOR_PURPLE"("COLOR_RESET);
         afficher_elem_plat(e->suivant_left);
-        printf(", ");
+        printf(COLOR_PURPLE", "COLOR_RESET);
         afficher_elem_plat(e->suivant_right);
-        printf(")");
+        printf(COLOR_PURPLE")"COLOR_RESET);
     }
 }
 
@@ -396,32 +376,33 @@ Main : Fonction qui effectue une etape de l'algorithme de UPGMA et qui retourne 
       sur une nouvelle liste de noeuds
 */
 List_Noeuds* fuse_matrice_upgma(int entries, List_Noeuds* list, float matrice_distance[][entries]) {
-    //TODO
-
+    // Allocate memory for a new list of nodes
     List_Noeuds* newl = (List_Noeuds*)malloc(sizeof(List_Noeuds));
 
     float min;
     float newdv;
     int k = 0;
-
     int ptr = 1;
     int j_min;
     int i_min;
 
+    // Find the minimum value in the distance matrix and its indices
     find_min_index_distance_matrix(entries,list->nb_elements,matrice_distance,&min,&i_min,&j_min);
 
+    // Group the nodes together
     group_together(list,newl,(i_min),(j_min));
 
+    // Create a new distance matrix
     float matrice_distance_new[entries-1][entries-1];
 
+    // Set the new distance matrix
     set_new(entries,matrice_distance,matrice_distance_new,j_min,i_min);
-
-    //print_matrix_float(entries-1,entries-1,matrice_distance_new);
 
     while (k < entries)
     {
+        // If the current index is not equal to i_min and j_min
         if (k != i_min && k != j_min){
-
+            // Calculate the new cell value
             newdv = calcule_new_cell(entries,list,matrice_distance,i_min,j_min,k);
 
             matrice_distance_new[ptr][0] = newdv;
@@ -429,14 +410,12 @@ List_Noeuds* fuse_matrice_upgma(int entries, List_Noeuds* list, float matrice_di
             ptr++;
         }
 
+        // Increment the counter
         k++;
     }
 
-    //print_matrix_float(entries-1,entries-1,matrice_distance_new);
-
+    // Copy the new distance matrix to the original distance matrix
     set_copy(newl->nb_elements,matrice_distance,matrice_distance_new);
-
-    //print_matrix_float(newl->nb_elements,newl->nb_elements,matrice_distance);
 
     return newl;
 }
@@ -659,5 +638,7 @@ void show_tree(char* file_aligne, char Algorithme) {
     afficher_arbre_plat(&a);
     int step = 1;
     char mark = 'l';
+    printf("\n");
     new_affichage(a.tete,&step,mark);
+    printf("\n");
 }

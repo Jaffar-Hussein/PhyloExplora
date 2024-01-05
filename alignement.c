@@ -78,9 +78,9 @@ Main : Procedure qui prend en entier 2 chaînes de caracteres et un score
 */
 void print_quality_alignement(char *ali1, char *ali2, int score)
 {
-    printf("The alignment score : %d\n", score);
-    printf("\tAlignement 1 : %s\n", ali1);
-    printf("\tAlignement 2 : %s\n\n", ali2);
+    printf(COLOR_GREEN"The alignment score :" COLOR_RED " %d" COLOR_RESET "\n", score);
+    printf(COLOR_GREEN"\tAlignement 1 :"COLOR_PURPLE" %s"COLOR_RESET"\n", ali1);
+    printf(COLOR_GREEN"\tAlignement 2 :"COLOR_PURPLE" %s"COLOR_RESET"\n", ali2);
 }
 
 /*----------------------------

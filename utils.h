@@ -12,6 +12,19 @@ Sujet propose par George Marchment
 #include <stdlib.h>
 #include <math.h>
 #include <ctype.h>
+
+
+// Aescape codes for colors
+#define COLOR_RED     "\x1b[31m"
+#define COLOR_GREEN   "\x1b[32m"
+#define COLOR_RESET   "\x1b[0m"
+#define COLOR_BLUE    "\x1b[34m"
+#define COLOR_YELLOW  "\x1b[33m"
+#define COLOR_RESET   "\x1b[0m"
+#define BOLD_TEXT    "\x1b[1m"
+#define UNDERLINE_TEXT "\x1b[4m"
+#define COLOR_PURPLE "\x1b[35m"
+
 // Sequence
 #define ID_MAX_LENGTH 50
 #define seq_MAX_LENGTH 400

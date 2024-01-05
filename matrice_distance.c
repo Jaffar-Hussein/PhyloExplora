@@ -75,11 +75,11 @@ void print_matrix_float(int n, int m, float matrix[][m])
         {
             if (j < i)
             {
-                printf("%9f ", matrix[i][j]);
+                printf(COLOR_GREEN "%9f " COLOR_RESET, matrix[i][j]);
             }
             else
             {
-                printf("     .    ");
+                printf(COLOR_RED "     .    " COLOR_RESET);
             }
         }
         printf("\n");
@@ -121,7 +121,7 @@ void show_distance_matrix(char *file_aligne)
     float matrice_distance[nb_entries][nb_entries];
     initialise_matrice(nb_entries, matrice_distance);
     fill_distance_matrix(nb_entries, matrice_distance, tab_sequences_aligne);
-    printf("La matrice de distance calculee pour le fichier '%s' :\n", file_aligne);
+    printf("La matrice de distance calculee pour le fichier '%s' :\n\n", file_aligne);
     print_matrix_float(nb_entries, nb_entries, matrice_distance);
     printf("\n");
 }
