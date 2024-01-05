@@ -107,3 +107,5 @@ void show_tree(char *file_aligne, char Algorithme);
 // void show_distance_matrix();
 // void show_sequences_file();
 // void show_tree();
+
+void printAsciiArt();

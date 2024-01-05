@@ -98,7 +98,7 @@ Main : Effectue l'affichage de la sequence
 */
 void affiche_sequence(Sequence *sequence)
 {
-    printf("\t*ID : %s\n\t*Sequence : %s\n", sequence->ID, sequence->seq);
+    printf("\t"COLOR_RED"*"COLOR_GREEN"ID : " COLOR_BLUE "%s" COLOR_RESET "\n\t"COLOR_RED"*"COLOR_GREEN"Sequence : " COLOR_PURPLE "%s" COLOR_RESET "\n", sequence->ID, sequence->seq);
 }
 
 /*-------------------------------
@@ -243,7 +243,7 @@ Main : Parse le fichier, sauvegarde les sequences dans une liste.
 void show_sequences_file(char *file)
 {
     int nb_entries = get_number_entries(file);
-    printf("Nombre d'entrees : %d\n", nb_entries);
+    printf("Nombre d'entrees : "COLOR_RED"%d"COLOR_RESET"\n", nb_entries);
     printf("\n");
     Sequence tab_sequences[nb_entries];
     parse_file(file, tab_sequences);

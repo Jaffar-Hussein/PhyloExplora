@@ -70,12 +70,67 @@ int main(int argc, char *argv[])
     char *file = "cat_dna.fasta";
     char *file_aligne = "cat_dna_aligne.fasta";
 
+    // LOGOOOOO
+    const char *title[] = {
+        "",
+        "",
+        "",
+        "____  _           _         _____            _                     ",
+        "|  _ \\| |__  _   _| | ___   | ____|_  ___ __ | | ___  _ __ ___ _ __ ",
+        "| |_) | '_ \\| | | | |/ _ \\  |  _| \\ \\/ / '_ \\| |/ _ \\| '__/ _ \\ '__|",
+        "|  __/| | | | |_| | | (_) | | |___ >  <| |_) | | (_) | | |  __/ |   ",
+        "|_|   |_| |_|\\__, |_|\\___/  |_____/_/\\_\\ .__/|_|\\___/|_|  \\___|_|   ",
+        "             |___/                     |_|                          ",
+        "",
+        "",
+        "",
+    };
+
+    const char *lions[] = {
+        "|\\_                \\|\\||             ",
+        "  -' | `.             -- ||||/       ",
+        "/7      `-._        /7   |||||/            ",
+        "/            `-.____/    |||||||/`-.____________",
+        "\\-'_                \\-' |||||||||               `-._",
+        " -- `-.              -/||||||||\\                `` -.`",
+        "       |\\              /||||||\\             \\_  |   `\\\\",
+        "       | \\  \\_______...-//|||\\|________...---'\\  \\    \\\\\\",
+        "       |  \\  \\            ||  |  \\ ``-.__--. | \\  |    ``-.__--.",
+        "       |  |\\  \\          / |  |\\  \\   ``---'/ / | |       ``---'",
+        "     _/  / _|  )      __/_/  / _|  )     __/ / _| |",
+        "    /,__/ /,__/      /,_/,__/_/,__/     /,__/ /,__/          tbk"};
+
+    int lines1 = sizeof(title) / sizeof(title[0]);
+    int lines2 = sizeof(lions) / sizeof(lions[0]);
+    int max_lines = lines1 > lines2 ? lines1 : lines2;
+
+    printf(COLOR_GREEN);
+    for (int i = 0; i < max_lines; i++)
+    {
+        if (i < lines1)
+        {
+            printf("%-70s", title[i]);
+        }
+        else
+        {
+            printf("%-70s", "");
+        }
+
+        if (i < lines2)
+        {
+            printf("%s", lions[i]);
+        }
+        printf("\n");
+    }
+    printf(COLOR_RESET);
+    // Ascciii Art
+
     if (SEQUENCES == 1)
     {
         printf("---------------- ");
         printf(BOLD_TEXT UNDERLINE_TEXT "SEQUENCES" COLOR_RESET);
-        printf(" ----------------\n");
-        printf("Je vais parser le fichier : '%s'\n", file);
+        printf(" ----------------\n\n");
+        printf("Je vais parser le fichier : '%s'\n\n", file);
         show_sequences_file(file);
     }
 
