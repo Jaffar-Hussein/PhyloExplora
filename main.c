@@ -13,8 +13,8 @@ int main() {
     int SEQUENCES = 1;
     int ALIGNEMENT = 1;
     int MATRICE_DISTANCE = 1;
-    int UPGMA = 0;
-    int NJ = 0;
+    int UPGMA = 1;
+    int NJ = 1;
 
     char* file = "cat_dna.fasta";
     char* file_aligne = "cat_dna_aligne.fasta";
@@ -23,7 +23,7 @@ int main() {
         printf("----------------");
         printf("SEQUENCES");
         printf("----------------\n");
-        printf("Je vais parser le fichier : '%s'\n", file);
+        printf("Fichier: '%s'\n", file);
         show_sequences_file(file);
     }
 
@@ -32,7 +32,7 @@ int main() {
     ALIGNEMENT
     */
     if (ALIGNEMENT == 1) {
-        printf("----------------");
+        printf("\n----------------");
         printf("ALIGNEMENT");
         printf("----------------\n");
 
@@ -61,27 +61,27 @@ int main() {
         set_sequence(&seq2, "Sequence 2", "ATCTCGTGA");
         needleman_wunsch(seq1, seq2, alignement1, alignement2);
 
-        printf("On cherche à aligner '%s' et '%s' en utilisant l'algorithme Needleman Wunsch, on obtient comme alignement :\n", seq1.seq, seq2.seq);
+        printf("\nAlignement des sequences '%s' et '%s' en utilisant l'algorithme Needleman Wunsch:\n", seq1.seq, seq2.seq);
         print_quality_alignement(alignement1, alignement2, score_alignement(alignement1, alignement2));
 
     }
 
     if (MATRICE_DISTANCE == 1) {
-        printf("----------------");
+        printf("\n----------------");
         printf("MATRICE DE DISTANCE");
         printf("----------------\n");
         show_distance_matrix(file_aligne);
     }
 
     if (UPGMA == 1) {
-        printf("----------------");
+        printf("\n----------------");
         printf("UPGMA");
         printf("----------------\n");
         show_tree(file_aligne, 'U');
     }
 
     if (NJ == 1) {
-        printf("----------------");
+        printf("\n----------------");
         printf("NEIGHBOR JOINING");
         printf("----------------\n");
         show_tree(file_aligne, 'N');

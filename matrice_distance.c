@@ -18,12 +18,12 @@ float distance(Sequence seq1, Sequence seq2) {
     //TODO
     float ev_step_count = 0.0, len = 0.0;
     for(int i = 0; seq1.seq[i] != '\0';i++){
-        if ((seq1.seq != '-' && seq2.seq != '-')){
+        if ((seq1.seq[i] != '-') && (seq2.seq[i] != '-')){
             if ((seq1.seq[i] !=  seq2.seq[i])){
                 ev_step_count += 1.0;
             }
+            len += 1.0;
         }
-        len += 1.0;
     }
     return (ev_step_count/len);
 }
@@ -98,30 +98,16 @@ Output : None
 Main : Fonction qui prend une adresse en entree et qui calcule et affiche la matrice de distance correspondant aux sequences
 */
 void show_distance_matrix(char* file_aligne){
-    printf("Hello World\n");
     int nb_entries = get_number_entries(file_aligne);
-    printf("Get Number Entries Check : %d\n",nb_entries);
     Sequence tab_sequences_aligne[nb_entries];
     parse_file(file_aligne, tab_sequences_aligne);
-    printf("Parse Check\n");
-    for (int i = 0; i < nb_entries; i++) {
+    /*for (int i = 0; i < nb_entries; i++) {
         affiche_sequence(&tab_sequences_aligne[i]);
         printf("\n");
-    }
+    }*/
     float matrice_distance[nb_entries][nb_entries];
     initialise_matrice(nb_entries, matrice_distance);
-    printf("Initialize Check\n");
-    /*int j;
-    for (int i = 1; i < nb_entries; i++){
-        j = 0;
-        while (j < i)
-        {
-            printf("%.1f",matrice_distance[i][j++]);
-        }
-        printf("\n");
-    }*/
     fill_distance_matrix(nb_entries, matrice_distance, tab_sequences_aligne);
-    printf("Fill Distance Matrix Check\n");
     printf("La matrice de distance calculee pour le fichier '%s' :\n", file_aligne);
     print_matrix_float(nb_entries, nb_entries, matrice_distance);
     printf("\n");

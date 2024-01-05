@@ -77,7 +77,7 @@ Main : Procedure qui prend en entier 2 chaînes de caracteres et un score
 */
 void print_quality_alignement(char* ali1, char* ali2, int score) {
     //TODO
-    printf("Le score d'alignement : %d\n\t%s\n\t%s\n",score,ali1,ali2);
+    printf("\nScore d'alignement : %d\n\t%s\n\t%s\n",score,ali1,ali2);
 }
 
 /*----------------------------
@@ -209,23 +209,6 @@ void needleman_wunsch(Sequence seq1, Sequence seq2, char* alignement1, char* ali
     char T[n][m];
     initialise_M(n,m,M);
     initialise_T(n,m,T);
-    //
-    printf("Check initialisation\n");
-    printf("Check Matrix M\n");
-    /*for (int i = 0; i < n; i++){
-        for (int j = 0; j < m; j++){
-            printf("%d",M[i][j]);
-        }
-        printf("\n");
-    }
-    printf("Check Matrix T\n");
-    for (int i = 0; i < n; i++){
-        for (int j = 0; j < m; j++){
-            printf("%c",T[i][j]);
-        }
-        printf("\n");
-    }
-    */
     int z = 0;
     for (int i = 1; i < n; i++){
         for (int j = 1; j < m; j++){
@@ -234,15 +217,14 @@ void needleman_wunsch(Sequence seq1, Sequence seq2, char* alignement1, char* ali
             T[i][j] = symbole(index);
         }
     }
-    printf("Check MIJ\n");
-    printf("Verfication matrix M\n");
+    printf("\nMatrice de score\n");
     for (int i = 0; i < n; i++){
         for (int j = 0; j < m; j++){
             printf("%d ",M[i][j]);
         }
         printf("\n");
     }
-    printf("Verfication matrix T\n");
+    printf("\nMatrice traceback\n");
     for (int i = 0; i < n; i++){
         for (int j = 0; j < m; j++){
             printf("%c ",T[i][j]);
@@ -253,8 +235,6 @@ void needleman_wunsch(Sequence seq1, Sequence seq2, char* alignement1, char* ali
     int i = (n-1), j = (m-1);
    
     while (T[i][j] != 'o'){
-
-        //printf("Starting from the end of the matrix\n");
 
         if (T[i][j] == 'd'){
             appendString(alignement1,seq1.seq[i-1]);
@@ -272,10 +252,6 @@ void needleman_wunsch(Sequence seq1, Sequence seq2, char* alignement1, char* ali
             --i;
         }
     }
-
-    printf("TraceBack\n");
-
-    printf("Check reverse string\n");
 }
 
 

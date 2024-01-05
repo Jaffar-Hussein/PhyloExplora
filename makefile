@@ -16,7 +16,7 @@ CFLAGS=-w
 all: phylo
 
 phylo: sequences.o alignement.o matrice_distance.o tree.o main.o
-	$(CC)  sequences.o alignement.o matrice_distance.o tree.o main.o -lm -o phylo
+	$(CC)  sequences.o alignement.o matrice_distance.o tree.o main.o -lm -g -o phylo
 
 tree.o: tree.c utils.h 
 	$(CC) -c tree.c $(CFLAGS)
