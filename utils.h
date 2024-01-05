@@ -11,7 +11,7 @@ Sujet propose par George Marchment
 #include <string.h>
 #include <stdlib.h>
 #include <math.h>
-
+#include <ctype.h>
 // Sequence
 #define ID_MAX_LENGTH 50
 #define seq_MAX_LENGTH 400
