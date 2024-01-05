@@ -30,8 +30,15 @@ int main(int argc, char *argv[])
         {
             argv[i][j] = toupper((unsigned char)argv[i][j]);
         }
-
-        if (strcmp(argv[i], "SEQUENCES") == 0)
+        if (strcmp(argv[i], "ALL") == 0)
+        {
+            SEQUENCES = 1;
+            ALIGNEMENT = 1;
+            MATRICE_DISTANCE = 1;
+            UPGMA = 1;
+            NJ = 1;
+        }
+        else if (strcmp(argv[i], "SEQUENCES") == 0)
         {
             SEQUENCES = 1;
         }
