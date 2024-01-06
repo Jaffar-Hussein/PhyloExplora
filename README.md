@@ -11,11 +11,10 @@
     <li><a href="#project-files-description"> ➤ Project Files Description</a></li>
     <li><a href="#getting-started"> ➤ Getting Started</a></li>
     <li><a href="#scenario1"> ➤ Sequence Alignment </a></li>
-    <li><a href="#scenario2"> ➤ Needleman Wusnshc Algorithyjm </a></li>
+    <li><a href="#scenario2"> ➤ Needleman-Wunsch Algorithm </a></li>
     <li><a href="#scenario3"> ➤ Distance Matrix </a></li>
-    <li><a href="#scenario4"> ➤ Unweighted Pairwise Global Sequence Alignment(UPGMA) </a></li>
-    <li><a href="#scenario5"> ➤ Neigbour Joining (NJ) </a></li>
-  
+    <li><a href="#scenario4"> ➤ Unweighted Pairwise Global Sequence Alignment (UPGMA) </a></li>
+    <li><a href="#scenario5"> ➤ Neighbour Joining (NJ) </a></li>
   </ol>
 </details>
 
@@ -46,11 +45,39 @@ The objective is to reconstruct the phylogenetic tree of these feline species us
 
 
 
-<!-- SCENARIO 1 -->
-<h2 id="scenario1"> :dna: Sequence Alignment</h2>
+<!-- SEQUENCE ALIGNMENT -->
+<h2 id="sequence-alignment"> :dna: Sequence Alignment </h2>
 
 <p align="justify"> 
-Describe the first scenario here. Explain what it does and how to use it.
+The method you will use to calculate the phylogenetic tree requires calculating the evolutionary distance between the sequences. Before you can calculate them, you first need to align the sequences considering three types of mutations:
+<ul>
+<li>Substitutions (one nucleotide is replaced by another)</li>
+<li>Insertions</li>
+<li>Deletions</li>
+</ul>
+
+For example, the sequences "ACTCCTGA" and "ATCTCGTGA" have several possible alignments (there are others):
+
+<pre>
+-ACTCCTGA
+ATCTCGTGA
+
+A-CTCCTGA
+ATCTCGTGA
+
+AC-TCCTGA
+ATCTCGTGA
+</pre>
+
+It is also possible that a deletion is not a mutation, but actually due to poor sequencing or DNA degradation as is often the case for sequencing DNA from extinct species.
+
+The "-" denotes a gap, which is a "hole" in the alignment that was caused by an insertion or a deletion. These two types of mutations are grouped under the term indel.
+
+These alignments correspond to a multitude of different phylogenetic histories. To select the best alignment, we therefore need to introduce the maximum parsimony hypothesis, which favors the phylogenetic history that involves the fewest assumptions and therefore, the fewest evolutionary changes. For example, among the three alignments above, we will prefer alignment 2 because it corresponds to the scenario with the fewest mutations:
+<ul>
+<li>Alignment 1 implies at least 1 indel and 2 substitutions</li>
+<li>Alignment 2 implies at least 1 indel and 1 substitution</li>
+</ul>
 </p>
 
 <!-- SCENARIO 2 -->
