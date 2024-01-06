@@ -200,7 +200,7 @@ The final tree is (((A,C),D),B).
 <p align="center"> 
   <img src="https://github.com/Jaffar-Hussein/PhyloExplora/assets/57854451/1538cea4-cd67-4a10-825f-998dd37f76eb" alt="UPGMA" height="80%" width="80%">
 </p>
-![Screen Recording 2024-01-06 at 21 22 53](https://github.com/Jaffar-Hussein/PhyloExplora/assets/57854451/1538cea4-cd67-4a10-825f-998dd37f76eb)
+
 
 
 <!-- NEIGHBOR JOINING -->
