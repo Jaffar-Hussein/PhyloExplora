@@ -8,7 +8,6 @@
   <ol>
     <li><a href="#about-the-project"> ➤ About The Project</a></li>
     <li><a href="#overview"> ➤ Overview</a></li>
-    <li><a href="#project-files-description"> ➤ Project Files Description</a></li>
     <li><a href="#getting-started"> ➤ Getting Started</a></li>
     <li><a href="#sequence-alignment"> ➤ Sequence Alignment </a></li>
     <li><a href="#scenario2"> ➤ Needleman-Wunsch Algorithm </a></li>
@@ -91,6 +90,7 @@ The Needleman-Wunsch algorithm is a dynamic programming algorithm used for seque
 1. Initialization of a score matrix (M) and a traceback matrix (T) of size (n+1) x (m+1), where n and m are the lengths of the two sequences to be aligned.
 
 2. Filling of the matrices M and T using the following formula:
+   
 $$
 M_{i,j} = \max \left( M_{i-1,j-1} + s(A_i, B_j), M_{i, j-1} + s(A_i, \text{gap}), M_{i-1, j} + s(B_j, \text{gap}) \right)
 $$
