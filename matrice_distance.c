@@ -113,11 +113,6 @@ void show_distance_matrix(char *file_aligne)
     int nb_entries = get_number_entries(file_aligne);
     Sequence tab_sequences_aligne[nb_entries];
     parse_file(file_aligne, tab_sequences_aligne);
-
-    /*for (int i = 0; i < nb_entries; i++) {
-        affiche_sequence(&tab_sequences_aligne[i]);
-        printf("\n");
-    }*/
     float matrice_distance[nb_entries][nb_entries];
     initialise_matrice(nb_entries, matrice_distance);
     fill_distance_matrix(nb_entries, matrice_distance, tab_sequences_aligne);

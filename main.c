@@ -123,7 +123,10 @@ int main(int argc, char *argv[])
         printf("\n");
     }
     printf(COLOR_RESET);
-    // Ascciii Art
+
+    /*
+    SEQUENCES
+   */
 
     if (SEQUENCES == 1)
     {
@@ -182,7 +185,7 @@ int main(int argc, char *argv[])
     {
         printf("---------------- ");
         printf(BOLD_TEXT UNDERLINE_TEXT "UPGMA" COLOR_RESET);
-        printf("----------------\n");
+        printf("----------------\n\n");
         show_tree(file_aligne, 'U');
     }
 

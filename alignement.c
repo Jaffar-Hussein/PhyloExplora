@@ -36,10 +36,8 @@ int get_val_base(char a)
         return G;
     case 'T':
         return T;
-    case '-':
-        return E;
     default:
-        return -1;
+        return E;
     }
 }
 

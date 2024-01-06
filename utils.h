@@ -13,30 +13,24 @@ Sujet propose par George Marchment
 #include <math.h>
 #include <ctype.h>
 
-
-// Aescape codes for colors
+// Escape codes for colors
 #define COLOR_RED     "\x1b[31m"
 #define COLOR_GREEN   "\x1b[32m"
-#define COLOR_RESET   "\x1b[0m"
 #define COLOR_BLUE    "\x1b[34m"
 #define COLOR_YELLOW  "\x1b[33m"
 #define COLOR_RESET   "\x1b[0m"
-#define BOLD_TEXT    "\x1b[1m"
+#define BOLD_TEXT     "\x1b[1m"
 #define UNDERLINE_TEXT "\x1b[4m"
-#define COLOR_PURPLE "\x1b[35m"
+#define COLOR_PURPLE  "\x1b[35m"
 
 // Sequence
 #define ID_MAX_LENGTH 50
 #define seq_MAX_LENGTH 400
 
-/**
- * @struct Sequence
- * @brief Represents a sequence with an ID and a sequence string.
- */
 typedef struct Sequence
 {
-    char ID[ID_MAX_LENGTH];   /**< The ID of the sequence. */
-    char seq[seq_MAX_LENGTH]; /**< The sequence string. */
+    char ID[ID_MAX_LENGTH];
+    char seq[seq_MAX_LENGTH];
 } Sequence;
 
 void show_sequences_file(char* file);
@@ -45,8 +39,7 @@ void parse_file(char* address, Sequence tab_sequences[]);
 void appendString(char* str, char c);
 void affiche_sequence(Sequence* sequence);
 
-
-// Alignement
+// Alignment
 #define NB_BASE 5
 
 typedef enum Base_Azotee
@@ -65,13 +58,13 @@ void set_sequence(Sequence* sequence, char* ID, char* seq);
 void needleman_wunsch(Sequence seq1, Sequence seq2, char* alignement1, char* alignement2);
 char symbole(int entier);
 
-//MATRICE DE DISTANCE
+// Distance Matrix
 void show_distance_matrix(char* file_aligne);
 void initialise_matrice(int entries, float matrice_distance[][entries]);
 void fill_distance_matrix(int entries, float matrice_distance[][entries], Sequence sequences[]);
 void print_matrix_float(int row, int col, float matrice_distance[][col]);
 
-//TREE
+// Tree
 typedef struct Noeud {
     char* valeur;
     struct Noeud* suivant_left;
@@ -97,15 +90,3 @@ typedef struct Arbre
 } Arbre;
 
 void show_tree(char *file_aligne, char Algorithme);
-
-
-// void needleman_wunsch();
-// void print_quality_alignement();
-// float score_alignement();
-// void set_empty_string();
-// void set_sequence();
-// void show_distance_matrix();
-// void show_sequences_file();
-// void show_tree();
-
-void printAsciiArt();
