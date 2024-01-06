@@ -10,10 +10,10 @@
     <li><a href="#overview"> ➤ Overview</a></li>
     <li><a href="#project-files-description"> ➤ Project Files Description</a></li>
     <li><a href="#getting-started"> ➤ Getting Started</a></li>
-    <li><a href="#scenario1"> ➤ Sequence Alignment </a></li>
+    <li><a href="#sequence-alignment"> ➤ Sequence Alignment </a></li>
     <li><a href="#scenario2"> ➤ Needleman-Wunsch Algorithm </a></li>
     <li><a href="#scenario3"> ➤ Distance Matrix </a></li>
-    <li><a href="#scenario4"> ➤ Unweighted Pairwise Global Sequence Alignment (UPGMA) </a></li>
+    <li><a href="#upgma"> ➤ Unweighted Pairwise Global Sequence Alignment (UPGMA) </a></li>
     <li><a href="#scenario5"> ➤ Neighbour Joining (NJ) </a></li>
   </ol>
 </details>
@@ -104,12 +104,53 @@ $$
 where `d` is the Jukes-Cantor distance and `p-distance` is the proportion of differing nucleotide sites.
 </p>
 
-<!-- SCENARIO 4 -->
-<h2 id="scenario4"> :link: Unweighted Pairwise Global Sequence Alignment (UPGMA)</h2>
+<!-- UPGMA -->
+<h2 id="upgma"> :dna: Unweighted Pair Group Method with Arithmetic Mean (UPGMA) </h2>
 
 <p align="justify"> 
-Describe the fourth scenario here. Explain what it does and how to use it.
+UPGMA is a simple hierarchical clustering method used to construct phylogenetic trees. The method operates on a distance matrix, which provides the distances between each pair of sequences. The steps of the UPGMA method are as follows:
+
+1. Start with a forest of trees, each consisting of a single leaf for each sequence.
+2. Find the minimum distance in the matrix, join the two corresponding nodes into a single node, and update the distance matrix.
+3. Repeat step 2 until only a single node remains.
+
+The distance between two clusters is calculated as the average distance between all pairs of sequences in the two clusters. This is where the "unweighted" and "arithmetic mean" parts of the name come from.
+
+The result of the UPGMA method is a rooted tree, which means that it assumes a constant rate of evolution (molecular clock hypothesis).
+
+Here's an example of how the UPGMA method works:
+
+<pre>
+Initial distance matrix:
+
+  A   B   C   D
+A  -   5   4   7
+B  5   -   7   10
+C  4   7   -   7
+D  7   10  7   -
+
+Step 1: Join A and C (smallest distance), update distance matrix:
+
+  AC  B   D
+AC  -  6   5.5
+B   6  -   10
+D   5.5 10 -
+
+Step 2: Join AC and D, update distance matrix:
+
+  ACD B
+ACD  -  8
+B    8  -
+
+Step 3: Join ACD and B:
+
+  ACD-B
+ACD-B  -
+</pre>
+
+The final tree is (((A,C),D),B).
 </p>
+
 
 <!-- SCENARIO 5 -->
 <h2 id="scenario5"> :handshake: Neighbour Joining (NJ)</h2>
