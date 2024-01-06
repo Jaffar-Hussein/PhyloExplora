@@ -15,6 +15,8 @@
     <li><a href="#scenario3"> ➤ Distance Matrix </a></li>
     <li><a href="#upgma"> ➤ Unweighted Pairwise Global Sequence Alignment (UPGMA) </a></li>
     <li><a href="#neighbor-joining"> ➤ Neighbour Joining (NJ) </a></li>
+     <li><a href="#references"> ➤ References</a></li>
+    <li><a href="#credits"> ➤ Credits</a></li>
   </ol>
 </details>
 
@@ -169,3 +171,31 @@ Note: To simplify life when building our tree, we ignore the distance between th
 
 You can find an example of applying this algorithm [here](http://www.evolution-textbook.org/content/free/tables/Ch_27/T11_EVOW_Ch27.pdf).
 </p>
+
+<!-- REFERENCES -->
+<h2 id="references"> :books: References</h2>
+
+<p align="justify"> 
+The following resources were used in the creation of this project:
+
+1. **Project Description by [George Marchment](https://github.com/George-Marchment)**: The project description provided by the professor heavily influenced the structure and content of this README. The project description can be found [here](consignes.pdf).
+2. **Wikipedia**: For the description of the algorithm and examples
+
+3. **Youtube**: For learning more about binary trees and Linked Lists.
+</p>
+
+4. **AI**: For advice on creation of ASCII art in C .
+
+5. **README Inspiration**: Github Awesome README's [awesome readme](https://github.com/matiassingers/awesome-readme)
+<!-- CREDITS -->
+<h2 id="credits"> :trophy: Credits</h2>
+
+<p align="justify"> 
+This project would not have been possible without the contributions of the following individuals:</p>
+
+<h3>Team</h3>
+
+- **[Leo Jourdain](https://github.com/LeoooJR)**
+- **[Mapathe Faye]()**
+- **[Jaffar Hussein]()**
+
