@@ -1,7 +1,7 @@
 
 <!--[output-onlinetools (1)](https://github.com/Jaffar-Hussein/PhyloExplora/assets/57854451/e469ac01-1a3a-497b-af55-5a4872d8040a)-->
 <p align="center"> 
-  <img src="https://github.com/Jaffar-Hussein/PhyloExplora/assets/57854451/e469ac01-1a3a-497b-af55-5a4872d8040a" alt="Pacman Logo" width="95%" height="100%">
+  <img src="https://github.com/Jaffar-Hussein/PhyloExplora/assets/57854451/e469ac01-1a3a-497b-af55-5a4872d8040a" alt="Lion Logo" width="95%" height="100%">
 </p>
 <details open="open">
   <summary>Table of Contents</summary>
@@ -10,8 +10,8 @@
     <li><a href="#overview"> ➤ Overview</a></li>
     <li><a href="#getting-started"> ➤ Getting Started</a></li>
     <li><a href="#sequence-alignment"> ➤ Sequence Alignment </a></li>
-    <li><a href="#scenario2"> ➤ Needleman-Wunsch Algorithm </a></li>
-    <li><a href="#scenario3"> ➤ Distance Matrix </a></li>
+    <li><a href="#needle"> ➤ Needleman-Wunsch Algorithm </a></li>
+    <li><a href="#distance"> ➤ Distance Matrix </a></li>
     <li><a href="#upgma"> ➤ Unweighted Pairwise Global Sequence Alignment (UPGMA) </a></li>
     <li><a href="#neighbor-joining"> ➤ Neighbour Joining (NJ) </a></li>
      <li><a href="#references"> ➤ References</a></li>
@@ -105,7 +105,7 @@ These alignments correspond to a multitude of different phylogenetic histories. 
 </p>
 
 <!-- NEEDLEMAN-WUNSCH ALGORITHM -->
-<h2 id="scenario2"> :dna: Needleman-Wunsch Algorithm</h2>
+<h2 id="needle"> :dna: Needleman-Wunsch Algorithm</h2>
 
 <p align="justify"> 
 The Needleman-Wunsch algorithm is a dynamic programming algorithm used for sequence alignment in bioinformatics. It finds the optimal global alignment between two sequences. The algorithm operates in three main steps:
@@ -130,8 +130,8 @@ The final element of the M matrix, M[n,m], gives the score of the alignment.
 </p>
 
 
-<!-- SCENARIO 3 -->
-<h2 id="scenario3"> :chart_with_upwards_trend: Distance Matrix</h2>
+<!-- Distance Matrix -->
+<h2 id="distance"> :chart_with_upwards_trend: Distance Matrix</h2>
 
 <p align="justify"> 
 To construct phylogenetic trees, we need a set of aligned sequences (multiple alignment). Therefore, we cannot use the Needleman-Wunsch algorithm as it only allows for pairwise alignment (between two sequences). As a result, the "cat_dna_aligne.fasta" file contains the sequences already aligned.
