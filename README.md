@@ -39,9 +39,8 @@ The objective is to reconstruct the phylogenetic tree of these feline species us
 <p>Clone the repository </p>
 <pre><code>git clone https://github.com/Jaffar-Hussein/PhyloExplora.git</code></pre>
 <p align="center"> 
-  <img src="https://github.com/Jaffar-Hussein/PhyloExplora/assets/57854451/7f91ebee-b161-4645-a9e8-713cc9c42f71" alt="Animated gif pacman game" height="80%" width="80%">
+  <img src="https://github.com/Jaffar-Hussein/PhyloExplora/assets/57854451/d4d7f14b-bd07-4d3c-80eb-c51febf55291)" alt="Getting started" height="80%" width="80%">
 </p>
-
 
 
 
