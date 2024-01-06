@@ -43,3 +43,61 @@ The objective is to reconstruct the phylogenetic tree of these feline species us
 </p>
 
 
+<!-- PROJECT FILES DESCRIPTION -->
+<h2 id="project-files-description"> :file_folder: Project Files Description</h2>
+
+<p align="justify"> 
+Describe each of the files included in your project here.
+</p>
+
+<!-- GETTING STARTED -->
+<h2 id="getting-started"> :rocket: Getting Started</h2>
+
+<p align="justify"> 
+Explain how to setup your project locally. This could include instructions on installing necessary software or libraries, cloning the project, and running the project.
+</p>
+
+<!-- SCENARIO 1 -->
+<h2 id="scenario1"> :dna: Sequence Alignment</h2>
+
+<p align="justify"> 
+Describe the first scenario here. Explain what it does and how to use it.
+</p>
+
+<!-- SCENARIO 2 -->
+<h2 id="scenario2"> :microscope: Needleman Wunsch Algorithm</h2>
+
+<p align="justify"> 
+Describe the second scenario here. Explain what it does and how to use it.
+</p>
+
+<!-- SCENARIO 3 -->
+<h2 id="scenario3"> :chart_with_upwards_trend: Distance Matrix</h2>
+
+<p align="justify"> 
+To construct phylogenetic trees, we need a set of aligned sequences (multiple alignment). Therefore, we cannot use the Needleman-Wunsch algorithm as it only allows for pairwise alignment (between two sequences). As a result, the "cat_dna_aligne.fasta" file contains the sequences already aligned.
+
+In the case of very close sequences (which is the case here), we estimate that the real evolutionary distance between the sequences is close to the 𝑝𝑑𝑖𝑠𝑡𝑎𝑛𝑐𝑒, which is simply the number of substitutions in the alignment over the total number of nucleotides. To simplify, we ignore positions aligned to gaps.
+
+We then apply the Jukes-Cantor correction to take into account the phenomenon of saturation (the same site can mutate several times over time). Its formula is:
+
+$$
+d = - \frac{3}{4} \ln\left(1 - \frac{4}{3} \times p\text{-distance}\right)
+$$
+
+where `d` is the Jukes-Cantor distance and `p-distance` is the proportion of differing nucleotide sites.
+</p>
+
+<!-- SCENARIO 4 -->
+<h2 id="scenario4"> :link: Unweighted Pairwise Global Sequence Alignment (UPGMA)</h2>
+
+<p align="justify"> 
+Describe the fourth scenario here. Explain what it does and how to use it.
+</p>
+
+<!-- SCENARIO 5 -->
+<h2 id="scenario5"> :handshake: Neighbour Joining (NJ)</h2>
+
+<p align="justify"> 
+Describe the fifth scenario here. Explain what it does and how to use it.
+</p>
