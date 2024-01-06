@@ -3,7 +3,9 @@
 <p align="center"> 
   <img src="https://github.com/Jaffar-Hussein/PhyloExplora/assets/57854451/e469ac01-1a3a-497b-af55-5a4872d8040a" alt="Pacman Logo" width="95%" height="100%">
 </p>
- <ol>
+<details open="open">
+  <summary>Table of Contents</summary>
+  <ol>
     <li><a href="#about-the-project"> ➤ About The Project</a></li>
     <li><a href="#overview"> ➤ Overview</a></li>
     <li><a href="#project-files-description"> ➤ Project Files Description</a></li>
@@ -15,7 +17,7 @@
     <li><a href="#scenario5"> ➤ Neigbour Joining (NJ) </a></li>
   
   </ol>
-
+</details>
 
 <!-- ABOUT THE PROJECT -->
 <h2 id="about-the-project"> :pencil: About The Project</h2>
@@ -36,6 +38,8 @@ The objective is to reconstruct the phylogenetic tree of these feline species us
 
 <p>Clone the repository </p>
 <pre><code>git clone https://github.com/Jaffar-Hussein/PhyloExplora.git</code></pre>
-
+<p align="center"> 
+  <img src="https://github.com/Jaffar-Hussein/PhyloExplora/assets/57854451/7f91ebee-b161-4645-a9e8-713cc9c42f71" alt="Animated gif pacman game" height="80%" width="80%">
+</p>
 
 
