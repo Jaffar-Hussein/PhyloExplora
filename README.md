@@ -36,20 +36,44 @@ The objective is to reconstruct the phylogenetic tree of these feline species us
 <!-- GETTING STARTED -->
 <h2 id="getting-started"> :rocket: Getting Started</h2>
 
-<p>Clone the repository </p>
+<!-- <p>Clone the repository </p>
 <pre><code>git clone https://github.com/Jaffar-Hussein/PhyloExplora.git</code></pre>
+
+<pre>
+  <code>git clone https://github.com/Jaffar-Hussein/PhyloExplora.git</code>
+  <code>cd PhyloExplora</code>
+  <code>make</code>
+  <code>./phylo all</code>
+  <code>./phylo {name of section e.g nj}</code>
+</pre>
+-->
+```bash
+# Clone the repository to your local machine
+git clone https://github.com/Jaffar-Hussein/PhyloExplora.git
+
+# Change directory to the cloned repository
+cd PhyloExplora
+
+# Compile the project using the makefile
+make
+
+# Run all sections of the project
+./phylo all
+
+# Run a specific section of the project (replace {section name} with the name of the section, e.g., nj)
+./phylo {section name}
+```
+Here's a preview of what you can expect:
 <p align="center"> 
   <img src="https://github.com/Jaffar-Hussein/PhyloExplora/assets/57854451/d4d7f14b-bd07-4d3c-80eb-c51febf55291)" alt="Getting started" height="80%" width="80%">
 </p>
-
-
-
 
 <!-- SEQUENCE ALIGNMENT -->
 <h2 id="sequence-alignment"> :dna: Sequence Alignment </h2>
 
 <p align="justify"> 
 The method you will use to calculate the phylogenetic tree requires calculating the evolutionary distance between the sequences. Before you can calculate them, you first need to align the sequences considering three types of mutations:
+
 <ul>
 <li>Substitutions (one nucleotide is replaced by another)</li>
 <li>Insertions</li>
@@ -71,7 +95,7 @@ ATCTCGTGA
 
 It is also possible that a deletion is not a mutation, but actually due to poor sequencing or DNA degradation as is often the case for sequencing DNA from extinct species.
 
-The "-" denotes a gap, which is a "hole" in the alignment that was caused by an insertion or a deletion. These two types of mutations are grouped under the term indel.
+The "-" denotes a gap, which is a "blank" in the alignment that was caused by an insertion or a deletion. These two types of mutations are grouped under the term indel.
 
 These alignments correspond to a multitude of different phylogenetic histories. To select the best alignment, we therefore need to introduce the maximum parsimony hypothesis, which favors the phylogenetic history that involves the fewest assumptions and therefore, the fewest evolutionary changes. For example, among the three alignments above, we will prefer alignment 2 because it corresponds to the scenario with the fewest mutations:
 <ul>
@@ -101,6 +125,11 @@ $$
 The final element of the M matrix, M[n,m], gives the score of the alignment.
 </p>
 
+<p align="center"> 
+  <img src="https://github.com/Jaffar-Hussein/PhyloExplora/assets/57854451/cd4943f7-1b79-426c-a5a7-4184285d8549" alt="Matrix" height="80%" width="80%">
+</p>
+
+
 <!-- SCENARIO 3 -->
 <h2 id="scenario3"> :chart_with_upwards_trend: Distance Matrix</h2>
 
@@ -116,6 +145,10 @@ d = - \frac{3}{4} \ln\left(1 - \frac{4}{3} \times p\text{-distance}\right)
 $$
 
 where `d` is the Jukes-Cantor distance and `p-distance` is the proportion of differing nucleotide sites.
+</p>
+
+<p align="center"> 
+  <img src="https://github.com/Jaffar-Hussein/PhyloExplora/assets/57854451/0bc048c4-c540-4ad7-9466-e32e9946a50d" alt="Alignment" height="80%" width="80%">
 </p>
 
 <!-- UPGMA -->
@@ -164,6 +197,10 @@ ACD-B  -
 
 The final tree is (((A,C),D),B).
 </p>
+<p align="center"> 
+  <img src="https://github.com/Jaffar-Hussein/PhyloExplora/assets/57854451/1538cea4-cd67-4a10-825f-998dd37f76eb" alt="UPGMA" height="80%" width="80%">
+</p>
+![Screen Recording 2024-01-06 at 21 22 53](https://github.com/Jaffar-Hussein/PhyloExplora/assets/57854451/1538cea4-cd67-4a10-825f-998dd37f76eb)
 
 
 <!-- NEIGHBOR JOINING -->
@@ -183,6 +220,11 @@ Note: To simplify life when building our tree, we ignore the distance between th
 
 You can find an example of applying this algorithm [here](http://www.evolution-textbook.org/content/free/tables/Ch_27/T11_EVOW_Ch27.pdf).
 </p>
+<p align="center"> 
+  <img src="https://github.com/Jaffar-Hussein/PhyloExplora/assets/57854451/64b6a124-0ddc-4997-93da-061a85588be7" alt="NJ" height="80%" width="80%">
+</p>
+
+
 
 <!-- REFERENCES -->
 <h2 id="references"> :books: References</h2>
