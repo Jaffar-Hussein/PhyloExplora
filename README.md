@@ -14,7 +14,7 @@
     <li><a href="#scenario2"> ➤ Needleman-Wunsch Algorithm </a></li>
     <li><a href="#scenario3"> ➤ Distance Matrix </a></li>
     <li><a href="#upgma"> ➤ Unweighted Pairwise Global Sequence Alignment (UPGMA) </a></li>
-    <li><a href="#scenario5"> ➤ Neighbour Joining (NJ) </a></li>
+    <li><a href="#neighbor-joining"> ➤ Neighbour Joining (NJ) </a></li>
   </ol>
 </details>
 
@@ -152,9 +152,20 @@ The final tree is (((A,C),D),B).
 </p>
 
 
-<!-- SCENARIO 5 -->
-<h2 id="scenario5"> :handshake: Neighbour Joining (NJ)</h2>
+<!-- NEIGHBOR JOINING -->
+<h2 id="neighbor-joining"> :dna: Neighbor Joining (NJ) </h2>
 
 <p align="justify"> 
-Describe the fifth scenario here. Explain what it does and how to use it.
+Neighbor Joining is another algorithm for calculating a phylogenetic tree from a distance matrix. It has the advantage of making fewer assumptions than UPGMA on the data (they are not necessarily ultrametric) and therefore gives better trees in almost all cases.
+
+The steps of the Neighbor Joining method are as follows:
+
+1. For each pair of taxa, calculate the sum of the distances to all other taxa.
+2. Calculate the matrix of "neighbor-joining distances" based on the original distances and the sums calculated in step 1.
+3. Find the pair of taxa with the smallest neighbor-joining distance and join them into a single node, updating the distance matrix.
+4. Repeat steps 1-3 until only a single node remains.
+
+Note: To simplify life when building our tree, we ignore the distance between the branches. We are only interested in the links of kinship.
+
+You can find an example of applying this algorithm [here](http://www.evolution-textbook.org/content/free/tables/Ch_27/T11_EVOW_Ch27.pdf).
 </p>
