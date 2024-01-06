@@ -34,7 +34,7 @@ The objective is to reconstruct the phylogenetic tree of these feline species us
 </p>
 
 <!-- GETTING STARTED -->
-<h2 id="getting-started"> :book: Getting Started</h2>
+<h2 id="getting-started"> :rocket: Getting Started</h2>
 
 <p>Clone the repository </p>
 <pre><code>git clone https://github.com/Jaffar-Hussein/PhyloExplora.git</code></pre>
@@ -43,19 +43,8 @@ The objective is to reconstruct the phylogenetic tree of these feline species us
 </p>
 
 
-<!-- PROJECT FILES DESCRIPTION -->
-<h2 id="project-files-description"> :file_folder: Project Files Description</h2>
 
-<p align="justify"> 
-Describe each of the files included in your project here.
-</p>
 
-<!-- GETTING STARTED -->
-<h2 id="getting-started"> :rocket: Getting Started</h2>
-
-<p align="justify"> 
-Explain how to setup your project locally. This could include instructions on installing necessary software or libraries, cloning the project, and running the project.
-</p>
 
 <!-- SCENARIO 1 -->
 <h2 id="scenario1"> :dna: Sequence Alignment</h2>
@@ -77,7 +66,7 @@ Describe the second scenario here. Explain what it does and how to use it.
 <p align="justify"> 
 To construct phylogenetic trees, we need a set of aligned sequences (multiple alignment). Therefore, we cannot use the Needleman-Wunsch algorithm as it only allows for pairwise alignment (between two sequences). As a result, the "cat_dna_aligne.fasta" file contains the sequences already aligned.
 
-In the case of very close sequences (which is the case here), we estimate that the real evolutionary distance between the sequences is close to the 𝑝𝑑𝑖𝑠𝑡𝑎𝑛𝑐𝑒, which is simply the number of substitutions in the alignment over the total number of nucleotides. To simplify, we ignore positions aligned to gaps.
+In the case of very close sequences (which is the case here), we estimate that the real evolutionary distance between the sequences is close to the `p-distance`, which is simply the number of substitutions in the alignment over the total number of nucleotides. To simplify, we ignore positions aligned to gaps.
 
 We then apply the Jukes-Cantor correction to take into account the phenomenon of saturation (the same site can mutate several times over time). Its formula is:
 
