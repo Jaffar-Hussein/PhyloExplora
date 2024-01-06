@@ -82,11 +82,24 @@ These alignments correspond to a multitude of different phylogenetic histories. 
 </ul>
 </p>
 
-<!-- SCENARIO 2 -->
-<h2 id="scenario2"> :microscope: Needleman Wunsch Algorithm</h2>
+<!-- NEEDLEMAN-WUNSCH ALGORITHM -->
+<h2 id="scenario2"> :dna: Needleman-Wunsch Algorithm</h2>
 
 <p align="justify"> 
-Describe the second scenario here. Explain what it does and how to use it.
+The Needleman-Wunsch algorithm is a dynamic programming algorithm used for sequence alignment in bioinformatics. It finds the optimal global alignment between two sequences. The algorithm operates in three main steps:
+
+1. Initialization of a score matrix (M) and a traceback matrix (T) of size (n+1) x (m+1), where n and m are the lengths of the two sequences to be aligned.
+
+2. Filling of the matrices M and T using the following formula:
+$$
+M_{i,j} = \max \left( M_{i-1,j-1} + s(A_i, B_j), M_{i, j-1} + s(A_i, \text{gap}), M_{i-1, j} + s(B_j, \text{gap}) \right)
+$$
+
+  where s is a function that calculates the similarity score between two nucleotides. The T matrix is filled with directions ('d' for diagonal, 'l' for left, 'u' for up) based on which value was used to calculate M[i,j].
+
+3. Traceback from the final element of the T matrix, T[n,m], to the start ('o'), following the directions. This gives the optimal global alignment between the two sequences.
+
+The final element of the M matrix, M[n,m], gives the score of the alignment.
 </p>
 
 <!-- SCENARIO 3 -->
@@ -198,7 +211,7 @@ This project would not have been possible without the contributions of the follo
  Made with :heart: by : 
 
 - **[Leo Jourdain](https://github.com/LeoooJR)**
-- **[Mapathe Faye]()**
-- **[Jaffar Hussein]()**
+- **[Mapathe Faye](https://github.com/Mapathefaye)**
+- **[Jaffar Hussein](https://github.com/Jaffar-Hussein)**
 
 And lots of :coffee:!
