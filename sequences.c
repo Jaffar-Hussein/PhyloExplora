@@ -96,10 +96,9 @@ Input : une sequence
 Output : None
 Main : Effectue l'affichage de la sequence
 */
-void affiche_sequence(Sequence* sequence) {
-    //TODO
- printf("ID: %s\n", sequence->ID);
- printf("Sequence: %s\n", sequence->seq);
+void affiche_sequence(Sequence *sequence)
+{
+    printf("\t"COLOR_RED"*"COLOR_GREEN"ID : " COLOR_BLUE "%s" COLOR_RESET "\n\t"COLOR_RED"*"COLOR_GREEN"Sequence : " COLOR_PURPLE "%s" COLOR_RESET "\n", sequence->ID, sequence->seq);
 }
 
 /*-------------------------------
@@ -173,40 +172,45 @@ Main : Fonction qui prend le code ainsi qu'une position start, elle va chercher 
        Elle retourne ensuite la derniere position qui est lu. Pour le cas de la derniere
        sequence elle retourne -1
 */
-int extract_next_sequence(char* code, int start, Sequence* sequence) {
-    //TODO
- int i = start;
-    int seqIndex = 0;
+int extract_next_sequence(char *code, int start_index, Sequence *sequence)
+{
+    int is_reading_id = 1;
+    char id[ID_MAX_LENGTH];
+    set_empty_string(id);
+    char seq[seq_MAX_LENGTH];
+    set_empty_string(seq);
 
-    // Sauter les caractères jusqu'à ce que '>' soit trouvé
-    while (code[i] != '>' && code[i] != '\0') {
-        i++;
+    while (code[++start_index] != '>' && code[start_index] != '\0')
+    {
+        if (is_reading_id == 1)
+        {
+            if (code[start_index] == '\n')
+            {
+                is_reading_id = 0;
+            } 
+            else 
+            {
+                appendString(id, code[start_index]);
+            }
+        } 
+        else 
+        {
+            if (code[start_index] != '\n')
+            {
+                appendString(seq, code[start_index]);
+            }
+        }
     }
 
-    // vérifier si '>' a été trouvé
-    if (code[i] == '>') {
-        i++; // on incrémente '>'
-        set_empty_string(sequence->ID);
+    set_sequence(sequence, id, seq);
 
-        //Extraire l'ID jusqu'à ce qu'une nouvelle ligne soit trouvée
-        while (code[i] != '\n') {
-            appendString(sequence->ID, code[i]);
-            i++;
-        }
-        i++; // Move past '\n'
-
-        // Extract sequence until the next '>' or end of string
-        set_empty_string(sequence->seq);
-        while (code[i] != '>' && code[i] != '\0') {
-            appendString(sequence->seq, code[i]);
-            i++;
-        }
-
-        // Return the last position read
-        return i;
-    } else {
-        // Return -1 for the last sequence
+    if (code[start_index] == '\0')
+    {
         return -1;
+    }
+    else 
+    {
+        return start_index;
     }
 }
 
@@ -215,23 +219,18 @@ Input : Adresse d'un fichier et une liste de sequences
 Output : None
 Main : Fonction qui lit un fichier, remplit la liste avec les sequences trouvees dans le fichier
 */
-void parse_file(char* address, Sequence tab_sequences[]) {
-    //TODO
-char* code = readFile(address);
+void parse_file(char *address, Sequence tab_sequences[])
+{
+    char *code = readFile(address);
+    Sequence sequence;
+    int start = 0;
+    int counter = 0;
 
-    if (code == NULL) {
-        printf("Error reading file\n");
-        return;
-    }
-
-    int num_sequences = get_number_entries(address);
-    int position = 0;
-
-    for (int i = 0; i < num_sequences; i++) {
-        position = extract_next_sequence(code, position, &tab_sequences[i]);
-        if (position == -1) {
-            break; // Reached the end of the file
-        }
+    // Keep extracting sequences until extract_next_sequence returns -1
+    while (start != -1)
+    {
+        start = extract_next_sequence(code, start, &sequence);
+        tab_sequences[counter++] = sequence;
     }
 }
 
