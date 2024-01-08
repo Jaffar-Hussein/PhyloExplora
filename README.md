@@ -61,7 +61,7 @@ make
 ./phylo all
 
 # Run a specific section of the project (replace {section name} with the name of the section, e.g., nj)
-./phylo {section name}
+#./phylo {section name}
 ```
 Here's a preview of what you can expect:
 <p align="center"> 
