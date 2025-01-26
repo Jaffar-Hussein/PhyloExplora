@@ -247,8 +247,6 @@ The following resources were used in the creation of this project:
 <p align="justify"> 
 This project would not have been possible without the contributions of the following individuals:</p>
 
- **[George Marchment](https://github.com/George-Marchment)** - For providing the project and guidance in its development.
-
  Made with :heart: by : 
 
 - **[Leo Jourdain](https://github.com/LeoooJR)**
